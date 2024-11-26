@@ -1,0 +1,31 @@
+@import "colors.css";
+
+.closeBtn {
+    -fx-background-image: url("../images/x_close.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+.closeBtn.purple {
+    -fx-background-color: -purple-600;
+}
+
+.closeBtn.purple:hover {
+    -fx-background-color: -purple-600-darker1
+}
+
+.closeBtn.purple:pressed {
+    -fx-background-color: -purple-600-darker2;
+}
+
+.closeBtn.red {
+    -fx-background-color: -red;
+}
+
+.closeBtn.red:hover {
+    -fx-background-color: -red-darker1
+}
+
+.closeBtn.red:pressed {
+    -fx-background-color: -red-darker2;
+}

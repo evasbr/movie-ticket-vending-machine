@@ -1,0 +1,18 @@
+@import "colors.css";
+
+* {
+    -fx-text-fill: -white;
+}
+
+.background {
+    -fx-background-color: -popup-bg;
+}
+
+.popupWrapper {
+    -fx-background-color: -purple-900;
+    -fx-background-radius: 8px;
+    -fx-background-insets: 1px;
+    -fx-border-color: -white;
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+}
