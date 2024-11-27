@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
-<Pane prefHeight="600.0" prefWidth="380.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.CardController">
+<?import javafx.scene.layout.Pane?>
+
+<Pane prefHeight="600.0" prefWidth="380.0" styleClass="card" stylesheets="@../css/card.css" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/23.0.1" fx:controller="com.oop.movieticketvendingmachine.controllers.CardController">
     <children>
         <ImageView fx:id="filmPoster" fitHeight="520.0" fitWidth="360.0" layoutX="10.0" layoutY="16.0" pickOnBounds="true">
 <!--            <Image fx:id="filmPoster" url="https://i.ibb.co.com/yp6gBrP/cross.png" />-->

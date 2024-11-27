@@ -1,0 +1,18 @@
+.card{
+    -fx-background-color: rgba(79, 70, 229, 0.4);
+    -fx-background-radius: 16;
+    -fx-border-style: solid;
+    -fx-border-color: #6366F1;
+    -fx-border-width: 2px;
+    -fx-border-radius: 16;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-transition: 0.7s;
+}
+
+.card:hover{
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
