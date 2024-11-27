@@ -58,7 +58,6 @@ public class HomeApp extends Application {
         cancelConfirm.setVisible(false);
         notSucceedScene.setVisible(false);
 
-
         // Menambahkan action objek
         Button qrBtn = homeC.getBcheckout();
         Button qrClose = byrC.getCloseBtn();
@@ -90,5 +89,4 @@ public class HomeApp extends Application {
     public static void main(String[] args) {
         launch();
     }
-
 }
