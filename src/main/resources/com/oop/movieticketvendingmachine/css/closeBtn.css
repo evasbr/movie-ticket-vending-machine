@@ -6,6 +6,10 @@
     -fx-background-position: center;
 }
 
+.closeBtn:hover {
+    -fx-cursor: hand;
+}
+
 .closeBtn.purple {
     -fx-background-color: -purple-600;
 }

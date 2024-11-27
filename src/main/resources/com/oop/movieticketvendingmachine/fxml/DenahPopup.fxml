@@ -1,14 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.oop.movieticketvendingmachine.controllers.DenahPopupController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane prefHeight="833.0" prefWidth="1280.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.DenahPopupController">
+   <children>
+      <AnchorPane layoutX="22.0" layoutY="61.0" styleClass="popupWrapper">
+         <children>
+            <VBox alignment="CENTER" prefHeight="684.0" prefWidth="1235.0" spacing="60.0">
+               <children>
+                  <Label text="Denah Tempat Duduk">
+                     <font>
+                        <Font name="System Bold" size="40.0" />
+                     </font>
+                  </Label>
+                  <VBox maxWidth="-Infinity" prefHeight="417.0" prefWidth="1091.0" spacing="15.0" styleClass="kursiWrapper">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="50.0" strokeType="INSIDE" styleClass="rect" width="12.0">
+                           <stroke>
+                              <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                                 <stops>
+                                    <Stop>
+                                       <color>
+                                          <Color />
+                                       </color>
+                                    </Stop>
+                                    <Stop offset="1.0">
+                                       <color>
+                                          <Color red="1.0" green="1.0" blue="1.0" />
+                                       </color>
+                                    </Stop>
+                                 </stops>
+                              </RadialGradient>
+                           </stroke>
+                           <VBox.margin>
+                              <Insets left="10.0" />
+                           </VBox.margin>
+                        </Rectangle>
+                        <VBox>
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="52.0">
+                                 <children>
+                                    <FlowPane fx:id="leftGrid" alignment="TOP_CENTER" hgap="18.0" prefHeight="157.0" prefWidth="488.0" vgap="23.0" />
+                                    <FlowPane fx:id="rightGrid" alignment="TOP_CENTER" hgap="18.0" prefHeight="157.0" prefWidth="488.0" vgap="23.0" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets bottom="35.0" left="20.0" right="20.0" top="35.0" />
+                     </padding>
+                  </VBox>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <Button fx:id="closeBtn" layoutX="1180.0" layoutY="95.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="58.0" stylesheets="@../css/closeBtn.css">
+         <font>
+            <Font name="System Bold" size="25.0" />
+         </font>
+         <styleClass>
+            <String fx:value="purple" />
+            <String fx:value="closeBtn" />
+         </styleClass>
+      </Button>
+   </children>
+   <stylesheets>
+      <URL value="@../css/popups.css" />
+      <URL value="@../css/denah.css" />
+   </stylesheets>
 </AnchorPane>
