@@ -1,0 +1,27 @@
+@import "closeBtn.css";
+
+.totalWrapper {
+    -fx-background-color: -purple-600;
+    -fx-background-radius: 8px;
+}
+
+#keranjangItemWrapper {
+    -fx-background-color: none;
+}
+
+.scroll-pane {
+    -fx-background-color: none;
+    -fx-border-color: #ddd;
+}
+
+.scroll-pane > .scroll-bar {
+    -fx-background-color: none;
+}
+
+.scroll-pane > .scroll-bar:vertical .thumb {
+    -fx-background-color: yellow;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: none;
+}

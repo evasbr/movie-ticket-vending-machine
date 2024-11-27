@@ -1,0 +1,11 @@
+@import "colors.css";
+@import "closeBtn.css";
+
+.info {
+    -fx-background-color: -purple-600;
+    -fx-background-radius: 8px;
+}
+
+.info > .label {
+    -fx-text-fill: -white;
+}
