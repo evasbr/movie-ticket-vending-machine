@@ -126,12 +126,12 @@ public class FilmDetailPopupController {
         deskripsiFilm.setText(des);
     }
 
-    public void setThrgtiket(){
-        if (waktuTiket.isFocused() & tempatDuduk.isFocused()){
-            thrgtiket.setVisible(true);
-        }else{
-            thrgtiket.setVisible(false);
-        }
-    }
+//    public void setThrgtiket(){
+//        if (waktuTiket.isFocused() & tempatDuduk.isFocused()){
+//            thrgtiket.setVisible(true);
+//        }else{
+//            thrgtiket.setVisible(false);
+//        }
+//    }
 
 }
