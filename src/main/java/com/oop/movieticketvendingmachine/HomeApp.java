@@ -31,7 +31,6 @@ public class HomeApp extends Application {
         AnchorPane succeedScene = succeedLoader.load();
         SucceedController succeedC = succeedLoader.getController();
 
-
         // Membuat scene pembayaran gagal
         FXMLLoader notSucceedLoader = new FXMLLoader(HomeApp.class.getResource("fxml/notsucceed-view.fxml"));
         AnchorPane notSucceedScene = notSucceedLoader.load();
@@ -41,6 +40,10 @@ public class HomeApp extends Application {
         FXMLLoader cancelConfirmLoader = new FXMLLoader(HomeApp.class.getResource("fxml/batalbayar-view.fxml"));
         AnchorPane cancelConfirm = cancelConfirmLoader.load();
         BatalBayarController batalByrC = cancelConfirmLoader.getController();
+
+        homeC.loadMovieCards();
+
+        Scene home = new Scene(mainPage);
         Scene cancel = new Scene(cancelConfirm);
         Scene notSucceed = new Scene(notSucceedScene);
 
