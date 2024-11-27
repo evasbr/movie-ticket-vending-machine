@@ -1,5 +1,6 @@
 package com.oop.movieticketvendingmachine.controllers;
 
+import com.oop.movieticketvendingmachine.HomeApp;
 import com.oop.movieticketvendingmachine.database.databaseConfig;
 import com.oop.movieticketvendingmachine.models.Ticket;
 import javafx.fxml.FXML;
@@ -9,6 +10,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -42,16 +44,15 @@ public class FilmDetailPopupController {
     @FXML
     private Label thrgtiket;
 
+    @FXML
+    private AnchorPane root;
+
 //    @FXML
 //    private VBox keranjangItemWrapper;
 
     @FXML
     public void initialize(int idFilm) {
-        closeBtn.setOnAction(event -> {
-            // Mendapatkan stage dari tombol yang diklik
-            Stage stage = (Stage) closeBtn.getScene().getWindow();
-            stage.close(); // Menutup stage
-        });
+        closeBtn.setOnAction(event -> root.setVisible(false));
 
         List<Ticket> tickets = getTicketList(idFilm);
         for(Ticket ticket : tickets){
