@@ -1,0 +1,44 @@
+@import "colors.css";
+
+* {
+    -fx-text-fill: -white;
+}
+
+.button {
+    -fx-background-radius: 8px;
+}
+
+.kursiWrapper {
+    -fx-background-color: -kursi-wrapper;
+}
+
+.kursiBtnAvail {
+    -fx-background-color: -purple-600;
+}
+
+.kursiBtnAvail:hover {
+    -fx-background-color: -purple-600-darker1;
+    -fx-cursor: hand;
+}
+
+.kursiBtnAvail:pressed {
+    -fx-background-color: -purple-600-darker2;
+}
+
+.kursiBtnUnavail {
+    -fx-background-color: -purple-600;;
+    -fx-opacity: 30%;
+}
+
+.kursiBtnSelect {
+    -fx-background-color: -kursi-select;
+}
+
+.kursiBtnSelect:hover {
+    -fx-background-color: -kursi-select-darker1;
+    -fx-cursor: hand;
+}
+
+.kursiBtnSelect:pressed {
+    -fx-background-color: -kursi-select-darker2;
+}
