@@ -1,0 +1,84 @@
+#content{
+    -fx-background-color: #1E1B4B;
+}
+
+.label{
+    -fx-font-family: "Poppins";
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+#titletext{
+    -fx-font-weight: bold;
+    -fx-font-size: 40px;
+}
+
+#subtitletext{
+    -fx-font-weight: bold;
+    -fx-font-size: 24px;
+}
+
+#numbtutorpane Label{
+    -fx-font-size: 32px;
+    -fx-border-color: white;
+    -fx-border-style: solid;
+    -fx-border-radius: 50%;
+}
+
+#texttutorpane Label{
+    -fx-font-size: 16px;
+}
+
+#tnotiffilm{
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+#navbar {
+    -fx-background-color: #6366F1;
+}
+
+#bkeranjang{
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-border-radius: 16;
+    -fx-font-family: "Poppins";
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-border-style: none;
+    -fx-background-color: #4F46E5;
+    -fx-background-radius: 8;
+}
+
+
+#bcheckout{
+    -fx-font-weight: bold;
+    -fx-font-size: 32px;
+    -fx-font-family: "Poppins";
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-border-radius: 16;
+    -fx-border-style: solid;
+    -fx-border-color: white;
+    -fx-background-color: #4F46E5;
+    -fx-background-radius: 16;
+}
+
+#contfilm Pane{
+    -fx-background-color: rgba(79, 70, 229, 0.4);
+    -fx-background-radius: 16;
+    -fx-border-style: solid;
+    -fx-border-color: #6366F1;
+    -fx-border-width: 2px;
+    -fx-border-radius: 16;
+}
+
+#contfilm Label{
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+

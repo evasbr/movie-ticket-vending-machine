@@ -11,7 +11,7 @@ public class databaseConfig {
 
     private static Connection connection = null;
 
-    public static Connection connect() {
+    public static Connection connectDB() {
         if (connection == null) {
             try {
                 connection = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -36,7 +36,7 @@ public class databaseConfig {
 
     public static void main(String[] args) {
         System.out.println("Testing koneksi...");
-        Connection conn = connect(); // Panggil method connect() untuk tes
+        Connection conn = connectDB(); // Panggil method connect() untuk tes
         if (conn != null) {
             System.out.println("Koneksi berhasil.");
         } else {

@@ -1,0 +1,37 @@
+.choice-box {
+    -fx-background-color: -choiceBox-bg; /* Warna latar belakang */
+    -fx-text-fill: white; /* Warna teks */
+    -fx-font-size: 14px; /* Ukuran font */
+    -fx-padding: 10px; /* Padding di dalam ChoiceBox */
+    -fx-border-color: #ffffff; /* Warna border */
+    -fx-border-width: 2px; /* Lebar border */
+    -fx-border-radius: 5px; /* Sudut border */
+}
+
+.choice-box .list-cell:filled {
+    -fx-text-fill: black; /* Warna teks */
+}
+
+.choice-box .list-view {
+    -fx-background-color: #FFFFFF; /* Warna latar belakang dropdown */
+    -fx-text-fill: black; /* Warna teks dropdown */
+}
+
+.choice-box .list-view .cell {
+    -fx-background-color: #FFFFFF; /* Warna latar belakang setiap item */
+    -fx-text-fill: black; /* Warna teks setiap item */
+}
+
+.choice-box .list-view .cell:hover {
+    -fx-background-color: #FFFFFF; /* Warna latar belakang saat hover */
+}
+
+#buttonDenah {
+    -fx-background-color: -choiceBox-bg; /* Warna latar belakang */
+    -fx-text-fill: white; /* Warna teks */
+    -fx-font-size: 14px; /* Ukuran font */
+    -fx-padding: 10px; /* Padding di dalam ChoiceBox */
+    -fx-border-color: #ffffff; /* Warna border */
+    -fx-border-width: 2px; /* Lebar border */
+    -fx-border-radius: 5px; /* Sudut border */
+}
