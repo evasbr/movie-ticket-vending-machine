@@ -21,6 +21,19 @@ public class HomeApp extends Application {
         AnchorPane mainPage = mainPageLoader.load();
         HomeController homeC = mainPageLoader.getController();
 
+        // Inisialisasi popup film
+        FXMLLoader filmLoader = new FXMLLoader(getClass().getResource("fxml/FilmDetailPopUp.fxml"));
+        AnchorPane film = filmLoader.load();
+        FilmDetailPopupController filmC = filmLoader.getController();
+//        mainPage.getChildren().add(film);
+
+        // Inisialisasi popup denah
+        FXMLLoader denahLoader = new FXMLLoader(getClass().getResource("fxml/DenahPopup.fxml"));
+        AnchorPane denah = denahLoader.load();
+        DenahPopupController denahC = denahLoader.getController();
+        mainPage.getChildren().add(denah);
+//        goToDenahBtn.setOnAction(event -> denah.setVisible(true));
+
         // Membuat scene halaman bayar
         FXMLLoader bayarLoader = new FXMLLoader(HomeApp.class.getResource("fxml/qr-view.fxml"));
         AnchorPane hlmByr = bayarLoader.load();
