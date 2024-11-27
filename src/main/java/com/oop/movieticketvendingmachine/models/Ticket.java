@@ -17,6 +17,14 @@ public class Ticket {
         this.status_tiket = status_tiket;
     }
 
+    public int getIdFilm(){
+        return id_film;
+    }
+
+    public int getIdTiket(){
+        return id_tiket;
+    }
+
     public String getNamaKursi(){
         return nama_kursi;
     }

@@ -1,16 +1,20 @@
 package com.oop.movieticketvendingmachine.controllers;
 
 import com.oop.movieticketvendingmachine.database.databaseConfig;
+import com.oop.movieticketvendingmachine.models.Keranjang;
 import com.oop.movieticketvendingmachine.models.Movie;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -18,18 +22,45 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.oop.movieticketvendingmachine.models.Keranjang.isiKeranjang;
+
 public class HomeController {
+    public static List<Movie> movies;
     @FXML
     private FlowPane contfilm;
+
+    @FXML
+    private Button bkeranjang;
 
     @FXML
     private Button bcheckout;
 
     @FXML
+    private Label thrghome;
+
+    @FXML
     private AnchorPane root;
 
+    @FXML
+    public void initialize() {
+        loadMovieCards();
+        bkeranjang.setOnAction(event -> {
+            try {
+                // Memuat FXML KeranjangPopup
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/KeranjangPopup.fxml"));
+                AnchorPane keranjangScene = loader.load();  // Memuat tampilan dari FXML
+                Stage stage = (Stage) root.getScene().getWindow();
+                root.getChildren().add(keranjangScene);
+                stage.setTitle("Detail Film");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
     public void loadMovieCards() {
-        List<Movie> movies = getMoviesList(); // Ambil daftar film dari database
+        movies = getMoviesList(); // Ambil daftar film dari database
         contfilm.setHgap(20);
         contfilm.setVgap(20);
         for (Movie movie : movies) {
@@ -112,5 +143,13 @@ public class HomeController {
 
     public FlowPane getMovieCard(){
         return contfilm;
+    }
+
+    public Button getBkeranjang() {
+        return bkeranjang;
+    }
+
+    public Label getThrghome(){
+        return thrghome;
     }
 }

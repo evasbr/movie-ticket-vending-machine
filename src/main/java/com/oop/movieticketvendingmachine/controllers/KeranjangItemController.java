@@ -39,15 +39,12 @@ public class KeranjangItemController {
         return hargaTxt.getText();
     }
 
+
+    public Button getDelBtn(){
+        return delBtn;
+    }
     public void setHargaTxt(String val) {
         hargaTxt.setText(val);
     }
 
-    public void deleteItem(MouseEvent event) {
-        if (kItem.getParent() instanceof javafx.scene.layout.Pane parent) {
-            parent.getChildren().remove(kItem); // Hapus KeranjangItem dari parent
-        }
-
-        // delete tiket di data
-    }
 }

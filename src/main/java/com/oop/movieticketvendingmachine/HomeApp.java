@@ -2,15 +2,20 @@ package com.oop.movieticketvendingmachine;
 
 
 import com.oop.movieticketvendingmachine.controllers.*;
+import com.oop.movieticketvendingmachine.models.Keranjang;
+import com.oop.movieticketvendingmachine.models.Ticket;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
+import static com.oop.movieticketvendingmachine.models.Keranjang.isiKeranjang;
 
 public class HomeApp extends Application {
 
@@ -20,6 +25,19 @@ public class HomeApp extends Application {
         FXMLLoader mainPageLoader = new FXMLLoader(HomeApp.class.getResource("fxml/Home.fxml"));
         AnchorPane mainPage = mainPageLoader.load();
         HomeController homeC = mainPageLoader.getController();
+
+        homeC.loadMovieCards();
+
+        // Inisialisasi popup film
+        FXMLLoader filmLoader = new FXMLLoader(getClass().getResource("fxml/FilmDetailPopUp.fxml"));
+        AnchorPane film = filmLoader.load();
+        FilmDetailPopupController filmC = filmLoader.getController();
+
+        // Inisialisasi popup denah
+        FXMLLoader denahLoader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/DenahPopup.fxml"));
+        AnchorPane denah = denahLoader.load();
+        DenahPopupController denahC = denahLoader.getController();
+//        goToDenahBtn.setOnAction(event -> denah.setVisible(true));
 
         // Membuat scene halaman bayar
         FXMLLoader bayarLoader = new FXMLLoader(HomeApp.class.getResource("fxml/qr-view.fxml"));
@@ -41,8 +59,6 @@ public class HomeApp extends Application {
         AnchorPane cancelConfirm = cancelConfirmLoader.load();
         BatalBayarController batalByrC = cancelConfirmLoader.getController();
 
-        homeC.loadMovieCards();
-
         Scene home = new Scene(mainPage);
         Scene cancel = new Scene(cancelConfirm);
         Scene notSucceed = new Scene(notSucceedScene);
@@ -50,13 +66,17 @@ public class HomeApp extends Application {
         // Memunculkan scene popup dan membuatnya transparan
         mainPage.getChildren().add(hlmByr);
         mainPage.getChildren().add(succeedScene);
-
         mainPage.getChildren().add(cancelConfirm);
         mainPage.getChildren().add(notSucceedScene);
+        mainPage.getChildren().add(film);
+        mainPage.getChildren().add(denah);
+
         hlmByr.setVisible(false);
         succeedScene.setVisible(false);
         cancelConfirm.setVisible(false);
         notSucceedScene.setVisible(false);
+        film.setVisible(false);
+        denah.setVisible(false);
 
         // Menambahkan action objek
         Button qrBtn = homeC.getBcheckout();
@@ -66,11 +86,19 @@ public class HomeApp extends Application {
         Button cancelAgree = batalByrC.getAgreeBtn();
         Button cancelNotAgree = batalByrC.getNotAgreeBtn();
         Button notSucceedClose = notSucceedC.getCloseBtn();
+        Button openDenah = filmC.getButtonDenah();
+        Button closeDenah = denahC.getCloseBtn();
 
         // Mengaktifkan action objek
         qrBtn.setOnMouseClicked(event -> hlmByr.setVisible(true));
         qrClose.setOnMouseReleased(event -> cancelConfirm.setVisible(true));
-        succeedQr.setOnMouseClicked(event -> succeedScene.setVisible(true));
+        succeedQr.setOnMouseClicked(event -> {
+            succeedScene.setVisible(true);
+            for(Ticket ticket : isiKeranjang){
+                byrC.updateTicketStatus(ticket.getIdTiket());
+            }
+            Keranjang.kosongkan();
+        });
         succeedQr.setOnMouseReleased(event -> hlmByr.setVisible(false));
         succeedClose.setOnMouseClicked(event -> succeedScene.setVisible(false));
         cancelAgree.setOnMouseClicked(event -> notSucceedScene.setVisible(true));
@@ -78,6 +106,8 @@ public class HomeApp extends Application {
         cancelNotAgree.setOnMouseClicked(event -> cancelConfirm.setVisible(false));
         notSucceedClose.setOnMouseClicked(event -> notSucceedScene.setVisible(false));
         notSucceedClose.setOnMouseReleased(event -> cancelConfirm.setVisible(false));
+        openDenah.setOnMouseClicked(event -> denah.setVisible(true));
+        closeDenah.setOnMouseClicked(event -> denah.setVisible(false));
 
         // Mengatur dan menampilkan stage
         stage.setTitle("Cinema Ticket Vending Machine");
@@ -89,4 +119,5 @@ public class HomeApp extends Application {
     public static void main(String[] args) {
         launch();
     }
+
 }
