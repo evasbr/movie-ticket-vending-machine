@@ -18,15 +18,64 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.oop.movieticketvendingmachine.models.Keranjang.isiKeranjang;
+
 public class HomeController {
+    public static List<Movie> movies;
     @FXML
     private FlowPane contfilm;
 
     @FXML
+    private Button bkeranjang;
+
+    @FXML
     private Button bcheckout;
 
+    @FXML
+    public void initialize() {
+        loadMovieCards();
+        isiKeranjang.add(1101);
+        isiKeranjang.add(1102);
+        isiKeranjang.add(1103);
+        bkeranjang.setOnAction(event -> {
+            try {
+                // Memuat FXML KeranjangPopup
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/KeranjangPopup.fxml"));
+                AnchorPane root = loader.load();  // Memuat tampilan dari FXML
+
+                Stage popupStage = new Stage();
+                popupStage.setTitle("Keranjang Anda");  // Memberikan judul pada pop-up
+
+                // Menetapkan Scene ke Stage
+                Scene popupScene = new Scene(root);
+                popupStage.setScene(popupScene);
+
+                // Menampilkan pop-up
+                popupStage.show();  // Menampilkan pop-up
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+//        bkeranjang.setOnAction(event -> {
+//            try {
+//                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/KeranjangPopup.fxml"));
+//                Pane keranjang = loader.load();
+//
+//                Stage stage = new Stage();
+//                Scene scene = new Scene(keranjang);
+//
+//                stage.setScene(scene);
+//
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        });
+    }
+
     public void loadMovieCards() {
-        List<Movie> movies = getMoviesList(); // Ambil daftar film dari database
+        movies = getMoviesList(); // Ambil daftar film dari database
         contfilm.setHgap(20);
         contfilm.setVgap(20);
         for (Movie movie : movies) {

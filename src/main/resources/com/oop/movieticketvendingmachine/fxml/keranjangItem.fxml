@@ -28,7 +28,7 @@
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </padding>
       </VBox>
-      <Button fx:id="delBtn" mnemonicParsing="false" onMouseReleased="#deleteItem" prefHeight="60.0" prefWidth="60.0">
+      <Button fx:id="delBtn" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0">
          <styleClass>
             <String fx:value="closeBtn" />
             <String fx:value="red" />

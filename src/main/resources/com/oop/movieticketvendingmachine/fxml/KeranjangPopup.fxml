@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="833.0" prefWidth="1280.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.FilmDetailPopupController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="833.0" prefWidth="1280.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.KeranjangPopupController">
    <children>
       <AnchorPane layoutX="270.0" layoutY="102.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="541.0" prefWidth="740.0" styleClass="popupWrapper">
          <children>
@@ -26,60 +26,60 @@
                      <content>
                         <VBox fx:id="keranjangItemWrapper" alignment="TOP_CENTER" prefHeight="235.0" prefWidth="531.0" spacing="34.0">
                            <children>
-                              <HBox alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="486.0" spacing="32.0" stylesheets="@../css/keranjangItem.css">
-                                 <children>
-                                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="97.0" prefWidth="370.0" spacing="10.0" styleClass="info">
-                                       <children>
-                                          <Label text="WICKED, Minggu 19 Nov, 17:00, A1">
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="Rp 50.000,00">
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                       </padding>
-                                    </VBox>
-                                    <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0">
-                                       <styleClass>
-                                          <String fx:value="closeBtn" />
-                                          <String fx:value="red" />
-                                       </styleClass>
-                                    </Button>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="486.0" spacing="32.0" stylesheets="@../css/keranjangItem.css">
-                                 <children>
-                                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="97.0" prefWidth="370.0" spacing="10.0" styleClass="info">
-                                       <children>
-                                          <Label text="WICKED, Minggu 19 Nov, 17:00, A1">
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                          </Label>
-                                          <Label text="Rp 50.000,00">
-                                             <font>
-                                                <Font size="20.0" />
-                                             </font>
-                                          </Label>
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-                                       </padding>
-                                    </VBox>
-                                    <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0">
-                                       <styleClass>
-                                          <String fx:value="closeBtn" />
-                                          <String fx:value="red" />
-                                       </styleClass>
-                                    </Button>
-                                 </children>
-                              </HBox>
+                              <!--                              <HBox alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="486.0" spacing="32.0" stylesheets="@../css/keranjangItem.css">-->
+                              <!--                                 <children>-->
+                              <!--                                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="97.0" prefWidth="370.0" spacing="10.0" styleClass="info">-->
+                              <!--                                       <children>-->
+                              <!--                                          <Label text="WICKED, Minggu 19 Nov, 17:00, A1">-->
+                              <!--                                             <font>-->
+                              <!--                                                <Font size="20.0" />-->
+                              <!--                                             </font>-->
+                              <!--                                          </Label>-->
+                              <!--                                          <Label text="Rp 50.000,00">-->
+                              <!--                                             <font>-->
+                              <!--                                                <Font size="20.0" />-->
+                              <!--                                             </font>-->
+                              <!--                                          </Label>-->
+                              <!--                                       </children>-->
+                              <!--                                       <padding>-->
+                              <!--                                          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />-->
+                              <!--                                       </padding>-->
+                              <!--                                    </VBox>-->
+                              <!--                                    <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0">-->
+                              <!--                                       <styleClass>-->
+                              <!--                                          <String fx:value="closeBtn" />-->
+                              <!--                                          <String fx:value="red" />-->
+                              <!--                                       </styleClass>-->
+                              <!--                                    </Button>-->
+                              <!--                                 </children>-->
+                              <!--                              </HBox>-->
+                              <!--                              <HBox alignment="CENTER_LEFT" prefHeight="98.0" prefWidth="486.0" spacing="32.0" stylesheets="@../css/keranjangItem.css">-->
+                              <!--                                 <children>-->
+                              <!--                                    <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="97.0" prefWidth="370.0" spacing="10.0" styleClass="info">-->
+                              <!--                                       <children>-->
+                              <!--                                          <Label text="WICKED, Minggu 19 Nov, 17:00, A1">-->
+                              <!--                                             <font>-->
+                              <!--                                                <Font size="20.0" />-->
+                              <!--                                             </font>-->
+                              <!--                                          </Label>-->
+                              <!--                                          <Label text="Rp 50.000,00">-->
+                              <!--                                             <font>-->
+                              <!--                                                <Font size="20.0" />-->
+                              <!--                                             </font>-->
+                              <!--                                          </Label>-->
+                              <!--                                       </children>-->
+                              <!--                                       <padding>-->
+                              <!--                                          <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />-->
+                              <!--                                       </padding>-->
+                              <!--                                    </VBox>-->
+                              <!--                                    <Button mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0">-->
+                              <!--                                       <styleClass>-->
+                              <!--                                          <String fx:value="closeBtn" />-->
+                              <!--                                          <String fx:value="red" />-->
+                              <!--                                       </styleClass>-->
+                              <!--                                    </Button>-->
+                              <!--                                 </children>-->
+                              <!--                              </HBox>-->
                            </children></VBox>
                      </content>
                   </ScrollPane>
@@ -93,7 +93,7 @@
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label text="Rp 100.000,00">
+                        <Label fx:id="totalKeranjang" text="Rp 100.000,00">
                            <font>
                               <Font name="System Bold" size="32.0" />
                            </font>
@@ -119,6 +119,5 @@
    <stylesheets>
       <URL value="@../css/popups.css" />
       <URL value="@../css/keranjang.css" />
-      <URL value="@../css/allBorder.css" />
    </stylesheets>
 </AnchorPane>

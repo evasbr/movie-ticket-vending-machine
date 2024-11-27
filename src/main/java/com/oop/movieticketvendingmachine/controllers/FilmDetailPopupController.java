@@ -14,9 +14,13 @@ import javafx.stage.Stage;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 public class FilmDetailPopupController {
+    public static List<Ticket> tickets;
+
     @FXML
     private Label judulFilm;
 
@@ -38,8 +42,9 @@ public class FilmDetailPopupController {
     @FXML
     private ChoiceBox<String> tempatDuduk;
 
-//    @FXML
-//    private VBox keranjangItemWrapper;
+
+    String filterWaktu ="";
+    String filterKursi ="";
 
     @FXML
     public void initialize(int idFilm) {
@@ -49,34 +54,74 @@ public class FilmDetailPopupController {
             stage.close(); // Menutup stage
         });
 
-        List<Ticket> tickets = getTicketList(idFilm);
+        waktuTiket.setOnAction(event -> {
+            System.out.println("filterWaktu: " + filterWaktu);
+            System.out.println("filterKursi: " + filterKursi);
+            System.out.println("Item yang dipilih: " + waktuTiket.getValue());
+
+            filterWaktu = waktuTiket.getValue();
+            waktuDropDown();
+        });
+
+        tempatDuduk.setOnAction(event -> {
+            System.out.println("filterWaktu: " + filterWaktu);
+            System.out.println("filterKursi: " + filterKursi);
+            System.out.println("Item yang dipilih: " + tempatDuduk.getValue());
+            filterKursi= tempatDuduk.getValue();
+            kursiDropDown();
+        });
+
+        tickets = getTicketList(idFilm);
+        kursiDropDown();
+        waktuDropDown();
+    }
+
+    public void kursiDropDown(){
+        Set<String> itemKursi = new LinkedHashSet<>();
+        tempatDuduk.getItems().clear();
+
         for(Ticket ticket : tickets){
-            Timestamp jadwalDate = (Timestamp) ticket.getJadwal();
-
-            // Tentukan format yang diinginkan
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss"); // Contoh format
-            // Mengonversi Date menjadi String
-            String jadwalString = dateFormat.format(jadwalDate);
-
-            // Menambahkan hasil ke ChoiceBox
-            waktuTiket.getItems().add(jadwalString);
-
-            tempatDuduk.getItems().addAll(ticket.getNamaKursi());
+            if(filterWaktu == null || filterWaktu.isEmpty()){
+                itemKursi.add(ticket.getNamaKursi());
+            } else {
+                if(ticket.getNamaKursi().equals(filterWaktu)){
+                    itemKursi.add(ticket.getNamaKursi());
+                }
+            }
         }
+
+        tempatDuduk.getItems().addAll(itemKursi);
     }
 
-    public Button getCloseBtn() {
-        return closeBtn;
-    }
+    public void waktuDropDown(){
+        Set<String> itemWaktu = new LinkedHashSet<>();
+        waktuTiket.getItems().clear();
 
-//    public VBox getKeranjangItemWrapper() {
-//        return keranjangItemWrapper;
-//    }
+        for(Ticket ticket : tickets){
+            if(filterKursi == null || filterKursi.isEmpty()){
+                // Jika tidak ada filter waktu, tambahkan semua waktu tiket
+                Timestamp jadwalDate = (Timestamp) ticket.getJadwal(); // Ambil jadwal tiket
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                String jadwalString = dateFormat.format(jadwalDate);
+                itemWaktu.add(jadwalString);
+            } else {
+                if(ticket.getNamaKursi().equals(filterWaktu)){
+                    // Jika tidak ada filter waktu, tambahkan semua waktu tiket
+                    Timestamp jadwalDate = (Timestamp) ticket.getJadwal(); // Ambil jadwal tiket
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                    String jadwalString = dateFormat.format(jadwalDate);
+                    itemWaktu.add(jadwalString);
+                }
+            }
+        }
+
+        waktuTiket.getItems().addAll(itemWaktu);
+    }
 
     public List<Ticket> getTicketList(int idFilm) {
         String query = "SELECT * FROM TIKET WHERE status_tiket = 'tersedia' AND id_film = ?";
         Connection connection = null;
-        List<Ticket> tickets = new ArrayList<>();
+        List<Ticket> daftarTiket = new ArrayList<>();
 
         try {
             connection = databaseConfig.connectDB();
@@ -97,7 +142,7 @@ public class FilmDetailPopupController {
                         resultSet.getString("nama_kursi"),
                         resultSet.getString("status_tiket")
                 );
-                tickets.add(ticket);
+                daftarTiket.add(ticket);
             }
 
             // Menutup ResultSet dan PreparedStatement
@@ -106,7 +151,7 @@ public class FilmDetailPopupController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return tickets;
+        return daftarTiket;
     }
 
     public void setJudulFilm(String judul){

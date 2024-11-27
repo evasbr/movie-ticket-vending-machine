@@ -20,6 +20,8 @@ public class HomeApp extends Application {
         FXMLLoader mainPageLoader = new FXMLLoader(HomeApp.class.getResource("fxml/Home.fxml"));
         AnchorPane mainPage = mainPageLoader.load();
         HomeController homeC = mainPageLoader.getController();
+//        homeC.loadMovieCards();
+
 
         // Membuat scene halaman bayar
         FXMLLoader bayarLoader = new FXMLLoader(HomeApp.class.getResource("fxml/qr-view.fxml"));
@@ -78,9 +80,10 @@ public class HomeApp extends Application {
         notSucceedClose.setOnMouseReleased(event -> cancelConfirm.setVisible(false));
 
         // Mengatur dan menampilkan stage
+        Scene main = new Scene(mainPage);
         stage.setTitle("Cinema Ticket Vending Machine");
-        stage.setScene(home);
-        stage.setAlwaysOnTop(true);
+        stage.setScene(main);
+//        stage.setAlwaysOnTop(true);
         stage.show();
     }
 
