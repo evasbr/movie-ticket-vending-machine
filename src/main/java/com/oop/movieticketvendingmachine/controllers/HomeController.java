@@ -13,6 +13,8 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -30,9 +32,11 @@ public class HomeController {
     @FXML
     private Button bkeranjang;
 
-
     @FXML
     private Button bcheckout;
+
+    @FXML
+    private Label thrghome;
 
     @FXML
     private AnchorPane root;
@@ -44,17 +48,10 @@ public class HomeController {
             try {
                 // Memuat FXML KeranjangPopup
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/KeranjangPopup.fxml"));
-                AnchorPane root = loader.load();  // Memuat tampilan dari FXML
-
-                Stage popupStage = new Stage();
-                popupStage.setTitle("Keranjang Anda");  // Memberikan judul pada pop-up
-
-                // Menetapkan Scene ke Stage
-                Scene popupScene = new Scene(root);
-                popupStage.setScene(popupScene);
-
-                // Menampilkan pop-up
-                popupStage.show();  // Menampilkan pop-up
+                AnchorPane keranjangScene = loader.load();  // Memuat tampilan dari FXML
+                Stage stage = (Stage) root.getScene().getWindow();
+                root.getChildren().add(keranjangScene);
+                stage.setTitle("Detail Film");
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -146,5 +143,13 @@ public class HomeController {
 
     public FlowPane getMovieCard(){
         return contfilm;
+    }
+
+    public Button getBkeranjang() {
+        return bkeranjang;
+    }
+
+    public Label getThrghome(){
+        return thrghome;
     }
 }

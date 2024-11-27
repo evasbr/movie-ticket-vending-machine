@@ -7,13 +7,12 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
-import static com.oop.movieticketvendingmachine.controllers.FilmDetailPopupController.tickets;
 import static com.oop.movieticketvendingmachine.controllers.HomeController.movies;
 import static com.oop.movieticketvendingmachine.models.Keranjang.isiKeranjang;
 
@@ -28,17 +27,17 @@ public class KeranjangPopupController {
     private VBox keranjangItemWrapper;
 
     @FXML
+    private AnchorPane root;
+
+    @FXML
     public void initialize() {
         loadKeranjangItem();
         totalKeranjang.setText("Rp " + String.valueOf(Keranjang.getTotalBelanja()) + ",00");
 
-        closeBtn.setOnAction(event -> {
-            Stage stage = (Stage) closeBtn.getScene().getWindow();
-            stage.close();  // Menutup pop-up
-        });
+        closeBtn.setOnAction(event -> root.setVisible(false));
     }
 
-    public void setTotalKeranjang(Label totalKeranjang) {
+    public void getTotalKeranjang(Label totalKeranjang) {
         this.totalKeranjang = totalKeranjang;
     }
 
@@ -92,6 +91,10 @@ public class KeranjangPopupController {
 
     public VBox getKeranjangItemWrapper() {
         return keranjangItemWrapper;
+    }
+
+    public Label getTotalKeranjang(){
+        return totalKeranjang;
     }
 
 }

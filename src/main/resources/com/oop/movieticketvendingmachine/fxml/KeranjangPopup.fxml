@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="833.0" prefWidth="1280.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.KeranjangPopupController">
+<AnchorPane fx:id="root" maxWidth="-Infinity" prefHeight="833.0" prefWidth="1280.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.KeranjangPopupController">
    <children>
       <AnchorPane layoutX="270.0" layoutY="102.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="541.0" prefWidth="740.0" styleClass="popupWrapper">
          <children>
