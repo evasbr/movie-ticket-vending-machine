@@ -1,5 +1,6 @@
 package com.oop.movieticketvendingmachine.controllers;
 
+import com.oop.movieticketvendingmachine.models.Keranjang;
 import com.oop.movieticketvendingmachine.models.Movie;
 import com.oop.movieticketvendingmachine.models.Ticket;
 import javafx.fxml.FXML;
@@ -29,6 +30,7 @@ public class KeranjangPopupController {
     @FXML
     public void initialize() {
         loadKeranjangItem();
+        totalKeranjang.setText("Rp " + String.valueOf(Keranjang.getTotalBelanja()) + ",00");
 
         closeBtn.setOnAction(event -> {
             Stage stage = (Stage) closeBtn.getScene().getWindow();
@@ -36,10 +38,14 @@ public class KeranjangPopupController {
         });
     }
 
+    public void setTotalKeranjang(Label totalKeranjang) {
+        this.totalKeranjang = totalKeranjang;
+    }
+
     public void loadKeranjangItem(){
         keranjangItemWrapper.getChildren().clear();  // Membersihkan semua item sebelumnya
         if(!isiKeranjang.isEmpty()){
-            for (Integer id : isiKeranjang) {
+            for (Ticket tiketKeranjang : isiKeranjang) {
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/keranjangItem.fxml"));
                     HBox itemKeranjang = loader.load();  // Memuat item keranjang
@@ -48,36 +54,34 @@ public class KeranjangPopupController {
                     String info = "";
                     String judul = "";
 
-                    for (Ticket tiket : tickets) {
-                        if (id.equals(tiket.getIdTiket())) {
-                            for (Movie movie : movies) {
-                                if (movie.getId() == tiket.getIdFilm()) {
-                                    judul = movie.getJudul();
-                                    break;
-                                }
-                            }
 
-                            info = judul + " | " + tiket.getNamaKursi() + " | " + tiket.getJadwal();
+                    for (Movie movie : movies) {
+                        if (movie.getId() == tiketKeranjang.getIdFilm()) {
+                            judul = movie.getJudul();
                             break;
                         }
                     }
+                    info = judul + " | " + tiketKeranjang.getNamaKursi() + " | " + tiketKeranjang.getJadwal();
 
                     controller.setInfo(info);
-                    controller.setHargaTxt("Rp " + 50000 + ", 00");
+                    controller.setHargaTxt("Rp50.000,00");
 
                     // Mendapatkan tombol hapus dan menambahkan event handler untuk menghapus item
                     controller.getDelBtn().setOnAction(event -> {
-                        // Menghapus ID tiket dari list isiKeranjang
-                        isiKeranjang.remove(id);
+                        Keranjang.hapusIsiKeranjang(tiketKeranjang.getIdTiket());
                         loadKeranjangItem();  // Memperbarui tampilan setelah penghapusan
+                        totalKeranjang.setText("Rp " + String.valueOf(Keranjang.getTotalBelanja()) + ",00");
                     });
 
                     keranjangItemWrapper.getChildren().add(itemKeranjang);  // Menambahkan item ke UI
+
 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
+        } else {
+            keranjangItemWrapper.getChildren().add(new Label("Tidak ada isi keranjang"));
         }
     }
 

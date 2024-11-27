@@ -1,11 +1,13 @@
 package com.oop.movieticketvendingmachine.controllers;
 
 import com.oop.movieticketvendingmachine.database.databaseConfig;
+import com.oop.movieticketvendingmachine.models.Keranjang;
 import com.oop.movieticketvendingmachine.models.Movie;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
@@ -28,15 +30,13 @@ public class HomeController {
     @FXML
     private Button bkeranjang;
 
+
     @FXML
     private Button bcheckout;
 
     @FXML
     public void initialize() {
         loadMovieCards();
-        isiKeranjang.add(1101);
-        isiKeranjang.add(1102);
-        isiKeranjang.add(1103);
         bkeranjang.setOnAction(event -> {
             try {
                 // Memuat FXML KeranjangPopup
@@ -57,21 +57,6 @@ public class HomeController {
                 e.printStackTrace();
             }
         });
-
-//        bkeranjang.setOnAction(event -> {
-//            try {
-//                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/KeranjangPopup.fxml"));
-//                Pane keranjang = loader.load();
-//
-//                Stage stage = new Stage();
-//                Scene scene = new Scene(keranjang);
-//
-//                stage.setScene(scene);
-//
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        });
     }
 
     public void loadMovieCards() {

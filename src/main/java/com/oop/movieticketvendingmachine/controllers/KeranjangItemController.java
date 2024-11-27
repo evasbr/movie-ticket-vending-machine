@@ -47,11 +47,4 @@ public class KeranjangItemController {
         hargaTxt.setText(val);
     }
 
-//    public void deleteItem(MouseEvent event) {
-//        if (kItem.getParent() instanceof javafx.scene.layout.Pane parent) {
-//            parent.getChildren().remove(kItem); // Hapus KeranjangItem dari parent
-//        }
-//
-//        // delete tiket di data
-//    }
 }

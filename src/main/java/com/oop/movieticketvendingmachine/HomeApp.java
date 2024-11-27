@@ -2,6 +2,8 @@ package com.oop.movieticketvendingmachine;
 
 
 import com.oop.movieticketvendingmachine.controllers.*;
+import com.oop.movieticketvendingmachine.models.Keranjang;
+import com.oop.movieticketvendingmachine.models.Ticket;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -11,6 +13,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
+import static com.oop.movieticketvendingmachine.models.Keranjang.isiKeranjang;
 
 public class HomeApp extends Application {
 
@@ -70,7 +74,13 @@ public class HomeApp extends Application {
         // Mengaktifkan action objek
         qrBtn.setOnMouseClicked(event -> hlmByr.setVisible(true));
         qrClose.setOnMouseReleased(event -> cancelConfirm.setVisible(true));
-        succeedQr.setOnMouseClicked(event -> succeedScene.setVisible(true));
+        succeedQr.setOnMouseClicked(event -> {
+            succeedScene.setVisible(true);
+            for(Ticket ticket : isiKeranjang){
+                byrC.updateTicketStatus(ticket.getIdTiket());
+            }
+            Keranjang.kosongkan();
+        });
         succeedQr.setOnMouseReleased(event -> hlmByr.setVisible(false));
         succeedClose.setOnMouseClicked(event -> succeedScene.setVisible(false));
         cancelAgree.setOnMouseClicked(event -> notSucceedScene.setVisible(true));
@@ -83,7 +93,6 @@ public class HomeApp extends Application {
         Scene main = new Scene(mainPage);
         stage.setTitle("Cinema Ticket Vending Machine");
         stage.setScene(main);
-//        stage.setAlwaysOnTop(true);
         stage.show();
     }
 

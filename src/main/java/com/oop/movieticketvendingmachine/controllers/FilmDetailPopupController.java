@@ -1,10 +1,12 @@
 package com.oop.movieticketvendingmachine.controllers;
 
 import com.oop.movieticketvendingmachine.database.databaseConfig;
+import com.oop.movieticketvendingmachine.models.Keranjang;
 import com.oop.movieticketvendingmachine.models.Ticket;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,45 +36,50 @@ public class FilmDetailPopupController {
     private Button buttonDenah;
 
     @FXML
+    private Button btnPesan;
+
+    @FXML
     private Button closeBtn;
 
     @FXML
-    private ChoiceBox<String> waktuTiket;
+    private ComboBox<String> waktuTiket;
 
     @FXML
-    private ChoiceBox<String> tempatDuduk;
+    private ComboBox<String> tempatDuduk;
 
 
     String filterWaktu ="";
-    String filterKursi ="";
 
     @FXML
     public void initialize(int idFilm) {
+        tempatDuduk.setDisable(true);
         closeBtn.setOnAction(event -> {
             // Mendapatkan stage dari tombol yang diklik
             Stage stage = (Stage) closeBtn.getScene().getWindow();
             stage.close(); // Menutup stage
         });
 
-        waktuTiket.setOnAction(event -> {
-            System.out.println("filterWaktu: " + filterWaktu);
-            System.out.println("filterKursi: " + filterKursi);
-            System.out.println("Item yang dipilih: " + waktuTiket.getValue());
-
-            filterWaktu = waktuTiket.getValue();
-            waktuDropDown();
+        btnPesan.setOnAction(event -> {
+            for(Ticket ticket : tickets){
+                Timestamp jadwalDate = (Timestamp) ticket.getJadwal(); // Ambil jadwal tiket
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                String jadwalString = dateFormat.format(jadwalDate);
+                if((jadwalString.equalsIgnoreCase(waktuTiket.getValue())) && (ticket.getNamaKursi().equals(tempatDuduk.getValue()))){
+                    Keranjang.tambahIsiKeranjang(ticket);
+                    break;
+                }
+            }
+            Stage stage = (Stage) closeBtn.getScene().getWindow();
+            stage.close(); // Menutup stage
         });
 
-        tempatDuduk.setOnAction(event -> {
-            System.out.println("filterWaktu: " + filterWaktu);
-            System.out.println("filterKursi: " + filterKursi);
-            System.out.println("Item yang dipilih: " + tempatDuduk.getValue());
-            filterKursi= tempatDuduk.getValue();
+        waktuTiket.setOnAction(event -> {
+            filterWaktu = waktuTiket.getValue();
+            tempatDuduk.setDisable(false);
             kursiDropDown();
         });
 
         tickets = getTicketList(idFilm);
-        kursiDropDown();
         waktuDropDown();
     }
 
@@ -81,13 +88,7 @@ public class FilmDetailPopupController {
         tempatDuduk.getItems().clear();
 
         for(Ticket ticket : tickets){
-            if(filterWaktu == null || filterWaktu.isEmpty()){
-                itemKursi.add(ticket.getNamaKursi());
-            } else {
-                if(ticket.getNamaKursi().equals(filterWaktu)){
-                    itemKursi.add(ticket.getNamaKursi());
-                }
-            }
+            itemKursi.add(ticket.getNamaKursi());
         }
 
         tempatDuduk.getItems().addAll(itemKursi);
@@ -98,21 +99,10 @@ public class FilmDetailPopupController {
         waktuTiket.getItems().clear();
 
         for(Ticket ticket : tickets){
-            if(filterKursi == null || filterKursi.isEmpty()){
-                // Jika tidak ada filter waktu, tambahkan semua waktu tiket
-                Timestamp jadwalDate = (Timestamp) ticket.getJadwal(); // Ambil jadwal tiket
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                String jadwalString = dateFormat.format(jadwalDate);
-                itemWaktu.add(jadwalString);
-            } else {
-                if(ticket.getNamaKursi().equals(filterWaktu)){
-                    // Jika tidak ada filter waktu, tambahkan semua waktu tiket
-                    Timestamp jadwalDate = (Timestamp) ticket.getJadwal(); // Ambil jadwal tiket
-                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                    String jadwalString = dateFormat.format(jadwalDate);
-                    itemWaktu.add(jadwalString);
-                }
-            }
+            Timestamp jadwalDate = (Timestamp) ticket.getJadwal(); // Ambil jadwal tiket
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+            String jadwalString = dateFormat.format(jadwalDate);
+            itemWaktu.add(jadwalString);
         }
 
         waktuTiket.getItems().addAll(itemWaktu);

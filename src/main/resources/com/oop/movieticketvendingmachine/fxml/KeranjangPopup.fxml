@@ -93,7 +93,7 @@
                               <Font size="20.0" />
                            </font>
                         </Label>
-                        <Label fx:id="totalKeranjang" text="Rp 100.000,00">
+                        <Label fx:id="totalKeranjang" text="Rp 0">
                            <font>
                               <Font name="System Bold" size="32.0" />
                            </font>

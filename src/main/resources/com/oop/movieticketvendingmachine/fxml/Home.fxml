@@ -116,7 +116,6 @@
                             </graphic>
                         </Button>
                         <Button fx:id="bcheckout" layoutX="912.0" layoutY="20.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="320.0" stylesheets="@../css/style.css" text="Checkout" />
-                        <Label fx:id="thrg" layoutX="242.0" layoutY="47.0" text="Total" />
                     </children>
                 </Pane>
             </children>
