@@ -14,9 +14,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="833.0" prefWidth="1280.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.FilmDetailPopupController">
     <children>
-        <AnchorPane layoutX="256.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="583.0" prefWidth="731.0" style="-fx-padding: 20;" styleClass="popupWrapper">
+        <AnchorPane layoutX="250.0" layoutY="125.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="583.0" prefWidth="731.0" style="-fx-padding: 20;" styleClass="popupWrapper">
             <children>
-                <Button fx:id="closeBtn" layoutX="667.0" layoutY="14.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="58.0">
+                <Button fx:id="closeBtn" layoutX="687.0" layoutY="32.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="58.0">
                     <font>
                         <Font name="System Bold" size="25.0" />
                     </font>
