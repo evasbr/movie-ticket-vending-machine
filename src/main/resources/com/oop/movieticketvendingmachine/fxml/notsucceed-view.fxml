@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="833.0" prefWidth="1280.0" styleClass="background" stylesheets="@../css/popups.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.SucceedController">
+<AnchorPane prefHeight="833.0" prefWidth="1280.0" styleClass="background" stylesheets="@../css/popups.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.NotSucceedController">
    <children>
       <AnchorPane layoutX="170.0" layoutY="65.0" prefHeight="704.0" prefWidth="940.0" styleClass="popupWrapper">
          <stylesheets>
@@ -17,9 +17,8 @@
             <URL value="@../css/popups.css" />
          </stylesheets>
          <children>
-            <Label layoutX="273.0" layoutY="54.0" styleClass="titletext" text="Pembayaran Berhasil" />
-            <Label layoutX="309.0" layoutY="112.0" styleClass="subtitletext" text="Silahkan ambil tiket dari mesin" />
-            <Label layoutX="120.0" layoutY="189.0" styleClass="subtitletext" text="Terima kasih sudah menggunakan vending machine tiket bioskop!" />
+            <Label layoutX="294.0" layoutY="56.0" styleClass="titletext" text="Pembayaran Gagal" />
+            <Label alignment="CENTER" layoutX="78.0" layoutY="109.0" prefHeight="190.0" prefWidth="785.0" styleClass="subtitletext" text="Waktu pembayaran sudah melewati batas, transaksi dibatalkan. Anda bisa memesan tiket kembali." textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
             <Button fx:id="closeBtn" layoutX="841.0" layoutY="21.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" stylesheets="@../css/closeBtn.css">
                <font>
                   <Font name="System Bold" size="25.0" />
@@ -29,9 +28,9 @@
                   <String fx:value="purple" />
                </styleClass>
             </Button>
-            <ImageView fitHeight="327.0" fitWidth="440.0" layoutX="271.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="327.0" fitWidth="440.0" layoutX="306.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../images/succed_check.png" />
+                  <Image url="@../images/notsucceed_wrong.png" />
                </image>
             </ImageView>
          </children>

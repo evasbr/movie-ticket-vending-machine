@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="833.0" prefWidth="1280.0" styleClass="background" stylesheets="@../css/popups.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.BatalBayarController">
+   <children>
+      <AnchorPane layoutX="170.0" layoutY="151.0" prefHeight="375.0" prefWidth="940.0" styleClass="popupWrapper">
+         <stylesheets>
+            <URL value="@../css/style.css" />
+            <URL value="@../css/popups.css" />
+         </stylesheets>
+         <children>
+            <Label layoutX="105.0" layoutY="28.0" styleClass="titletext" text="Konfirmasi Membatalkan Pembayaran " />
+            <Label layoutX="115.0" layoutY="86.0" prefHeight="97.0" prefWidth="711.0" styleClass="subtitletext" text="Yakin ingin menutup jendela pembayaran? Detail transaksi akan terhapus dan Anda harus mengulang dari awal." textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
+            <Button fx:id="notAgreeBtn" layoutX="50.0" layoutY="254.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="400.0" styleClass="bkonfirmasi" stylesheets="@../css/style.css" text="Tidak" />
+            <Button fx:id="agreeBtn" layoutX="490.0" layoutY="254.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="400.0" styleClass="bkonfirmasi" stylesheets="@../css/style.css" text="Ya, batalkan pembayaran" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

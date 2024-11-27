@@ -20,11 +20,15 @@
 }
 
 .button {
-    -fx-background-color: rgba(79, 70, 229, 1);
-}
-
-.button:hover{
-    -fx-background-color: rgba(79, 70, 229, 0.5);
+    -fx-font-weight: bold;
+    -fx-font-size: 32px;
+    -fx-font-family: "Poppins";
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-border-radius: 16;
+    -fx-background-color: #4F46E5;
+    -fx-background-radius: 16;
 }
 
 #numbtutorpane Label{
@@ -57,22 +61,42 @@
     -fx-alignment: center;
     -fx-border-style: none;
     -fx-background-color: #4F46E5;
-    -fx-background-radius: 8;
+    -fx-background-radius: 16;
+    -fx-background-color: rgba(79, 70, 229, 1);
 }
 
+#bkeranjang:hover{
+    -fx-background-color: rgba(79, 70, 229, 0.5);
+}
 
 #bcheckout{
-    -fx-font-weight: bold;
-    -fx-font-size: 32px;
+    -fx-border-color: white;
+    -fx-border-style: solid;
+    -fx-background-color: rgba(79, 70, 229, 1);
+}
+
+#bcheckout:hover{
+    -fx-background-color: rgba(79, 70, 229, 0.5);
+}
+
+.bkonfirmasi{
+    --fx-font-weight: bold;
+    -fx-font-size: 24px;
+    -fx-border-radius: 16;
+    -fx-border-style: solid;
+    -fx-border-color: white;
     -fx-font-family: "Poppins";
     -fx-text-fill: white;
     -fx-text-alignment: center;
     -fx-alignment: center;
-    -fx-border-radius: 16;
-    -fx-border-style: solid;
-    -fx-border-color: white;
+    -fx-border-style: none;
     -fx-background-color: #4F46E5;
     -fx-background-radius: 16;
+    -fx-background-color: rgba(79, 70, 229, 1);
+}
+
+.bkonfirmasi:hover{
+    -fx-background-color: #1E1B4B;
 }
 
 #contfilm Pane{
