@@ -81,6 +81,7 @@ public class HomeApp extends Application {
         notSucceedClose.setOnMouseClicked(event -> notSucceedScene.setVisible(false));
         notSucceedClose.setOnMouseReleased(event -> cancelConfirm.setVisible(false));
 
+
         // Mengatur dan menampilkan stage
         stage.setTitle("Cinema Ticket Vending Machine");
         stage.setScene(home);
