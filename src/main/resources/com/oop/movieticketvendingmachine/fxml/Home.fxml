@@ -10,16 +10,16 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1282.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.HomeController">
+<AnchorPane prefHeight="833.0" prefWidth="1282.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.HomeController">
     <children>
-        <VBox prefHeight="720.0" prefWidth="1282.0">
+        <VBox prefHeight="833.0" prefWidth="1282.0">
             <children>
-                <ScrollPane fx:id="awal" prefHeight="600.0" prefWidth="1282.0">
+                <ScrollPane fx:id="awal" hbarPolicy="NEVER" prefHeight="733.0" prefWidth="1282.0">
                     <content>
                         <AnchorPane fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1700.0" prefWidth="1280.0">
                             <children>
-                                <Label fx:id="titletext" layoutY="32.0" prefHeight="17.0" prefWidth="1238.0" text="Cinema Ticket Vending Machine" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0" />
-                                <Label fx:id="subtitletext" layoutY="112.0" prefHeight="17.0" prefWidth="1280.0" text="Pilih tiket bioskop yang ingin dipesan kemudian lakukan checkout" />
+                                <Label fx:id="titletext" layoutY="32.0" prefHeight="17.0" prefWidth="1238.0" styleClass="titletext" text="Cinema Ticket Vending Machine" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0" />
+                                <Label fx:id="subtitletext" layoutY="99.0" prefHeight="17.0" prefWidth="1280.0" styleClass="subtitletext" text="Pilih tiket bioskop yang ingin dipesan kemudian lakukan checkout" />
                                 <Pane fx:id="numbtutorpane" layoutX="145.0" layoutY="181.0" prefHeight="67.0" prefWidth="990.0">
                                     <children>
                                         <Label layoutX="463.0" layoutY="21.0" prefHeight="64.0" prefWidth="64.0" text="2" />
@@ -37,7 +37,7 @@
                                 <Label fx:id="tnotiffilm" layoutY="372.0" prefHeight="17.0" prefWidth="1280.0" text="Film Tayang" />
 
 
-                                <FlowPane fx:id="contfilm" layoutX="40.0" layoutY="413.0" prefHeight="1300.0" prefWidth="1200.0">
+                                <FlowPane fx:id="contfilm" layoutX="40.0" layoutY="413.0" prefHeight="1300.0" prefWidth="1200.0" styleClass="contfilm">
                                     <children>
 <!--                                        <Pane layoutX="10.0" layoutY="12.0" prefHeight="600.0" prefWidth="380.0">-->
 <!--                                            <children>-->
@@ -106,17 +106,17 @@
                 </ScrollPane>
                 <Pane fx:id="navbar" prefHeight="120.0" prefWidth="1282.0">
                     <children>
-                        <Button fx:id="bkeranjang" layoutX="54.0" layoutY="28.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="160.0" text="Keranjang">
+                        <Button fx:id="bkeranjang" layoutX="69.0" layoutY="23.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="160.0" stylesheets="@../css/style.css" text="Keranjang">
                             <graphic>
                                 <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../Images/gmb%20keranjang.png" />
+                                        <Image url="@../images/keranjang.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button fx:id="bcheckout" layoutX="918.0" layoutY="28.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="320.0" text="Checkout" />
-                        <Label fx:id="thrg" layoutX="228.0" layoutY="52.0" text="contoh" />
+                        <Button fx:id="bcheckout" layoutX="912.0" layoutY="20.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="320.0" stylesheets="@../css/style.css" text="Checkout" />
+                        <Label fx:id="thrg" layoutX="242.0" layoutY="47.0" text="Total" />
                     </children>
                 </Pane>
             </children>

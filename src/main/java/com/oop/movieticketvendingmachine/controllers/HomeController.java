@@ -5,6 +5,7 @@ import com.oop.movieticketvendingmachine.models.Movie;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
@@ -21,6 +22,8 @@ public class HomeController {
     @FXML
     private FlowPane contfilm;
 
+    @FXML
+    private Button bcheckout;
 
     public void loadMovieCards() {
         List<Movie> movies = getMoviesList(); // Ambil daftar film dari database
@@ -64,6 +67,7 @@ public class HomeController {
             controller.setDeskripsi(deskripsi);
 
             // Buat Stage baru untuk pop-up
+
             Stage stage = new Stage();
             stage.setScene(new Scene(movieCard));
             stage.setTitle("Detail Film");
@@ -99,5 +103,13 @@ public class HomeController {
             e.printStackTrace();
         }
         return movies;
+    }
+
+    public Button getBcheckout() {
+        return bcheckout;
+    }
+
+    public FlowPane getMovieCard(){
+        return contfilm;
     }
 }

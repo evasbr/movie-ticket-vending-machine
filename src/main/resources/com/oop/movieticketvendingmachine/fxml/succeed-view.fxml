@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="833.0" prefWidth="1280.0" styleClass="background" stylesheets="@../css/popups.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.SucceedController">
+   <children>
+      <AnchorPane layoutX="170.0" layoutY="65.0" prefHeight="704.0" prefWidth="940.0" styleClass="popupWrapper">
+         <stylesheets>
+            <URL value="@../css/style.css" />
+            <URL value="@../css/popups.css" />
+         </stylesheets>
+         <children>
+            <Label layoutX="273.0" layoutY="54.0" styleClass="titletext" text="Pembayaran Berhasil" />
+            <Label layoutX="309.0" layoutY="112.0" styleClass="subtitletext" text="Silahkan ambil tiket dari mesin" />
+            <Label layoutX="120.0" layoutY="189.0" styleClass="subtitletext" text="Terima kasih sudah menggunakan vending machine tiket bioskop!" />
+            <Button fx:id="closeBtn" layoutX="868.0" layoutY="14.0" mnemonicParsing="false" prefHeight="58.0" prefWidth="58.0" stylesheets="@../css/closeBtn.css">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="closeBtn" />
+                  <String fx:value="purple" />
+               </styleClass>
+            </Button>
+            <ImageView fitHeight="327.0" fitWidth="440.0" layoutX="271.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/succed_check.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

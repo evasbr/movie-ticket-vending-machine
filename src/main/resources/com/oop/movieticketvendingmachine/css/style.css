@@ -9,14 +9,22 @@
     -fx-alignment: center;
 }
 
-#titletext{
+.titletext{
     -fx-font-weight: bold;
     -fx-font-size: 40px;
 }
 
-#subtitletext{
+.subtitletext{
     -fx-font-weight: bold;
     -fx-font-size: 24px;
+}
+
+.button {
+    -fx-background-color: rgba(79, 70, 229, 1);
+}
+
+.button:hover{
+    -fx-background-color: rgba(79, 70, 229, 0.5);
 }
 
 #numbtutorpane Label{
