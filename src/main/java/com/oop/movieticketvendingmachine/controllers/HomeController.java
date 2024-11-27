@@ -25,6 +25,9 @@ public class HomeController {
     @FXML
     private Button bcheckout;
 
+    @FXML
+    private AnchorPane root;
+
     public void loadMovieCards() {
         List<Movie> movies = getMoviesList(); // Ambil daftar film dari database
         contfilm.setHgap(20);
@@ -66,13 +69,11 @@ public class HomeController {
             controller.setPosterFilm(url);
             controller.setDeskripsi(deskripsi);
 
-            // Buat Stage baru untuk pop-up
-
-            Stage stage = new Stage();
-            stage.setScene(new Scene(movieCard));
+            // Buat pop up
+            Stage stage = (Stage) root.getScene().getWindow();
+            root.getChildren().add(movieCard);
             stage.setTitle("Detail Film");
-//            stage.initModality(Modality.APPLICATION_MODAL); // Membuat pop-up modal
-            stage.show(); // Menampilkan stage
+
         }catch (IOException e) {
             e.printStackTrace();
         }
