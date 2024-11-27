@@ -1,5 +1,6 @@
 package com.oop.movieticketvendingmachine;
 
+
 import com.oop.movieticketvendingmachine.controllers.*;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +31,7 @@ public class HomeApp extends Application {
         AnchorPane succeedScene = succeedLoader.load();
         SucceedController succeedC = succeedLoader.getController();
 
+
         // Membuat scene pembayaran gagal
         FXMLLoader notSucceedLoader = new FXMLLoader(HomeApp.class.getResource("fxml/notsucceed-view.fxml"));
         AnchorPane notSucceedScene = notSucceedLoader.load();
@@ -39,26 +41,20 @@ public class HomeApp extends Application {
         FXMLLoader cancelConfirmLoader = new FXMLLoader(HomeApp.class.getResource("fxml/batalbayar-view.fxml"));
         AnchorPane cancelConfirm = cancelConfirmLoader.load();
         BatalBayarController batalByrC = cancelConfirmLoader.getController();
-
-        homeC.loadMovieCards();
-        // Membuat ScrollPane dan membungkus konten FXML
-
-        // Menambahkan stylesheet CSS
-        Scene home = new Scene(mainPage);
-        Scene bayar = new Scene(hlmByr);
-        Scene succeed = new Scene(succeedScene);
         Scene cancel = new Scene(cancelConfirm);
         Scene notSucceed = new Scene(notSucceedScene);
 
         // Memunculkan scene popup dan membuatnya transparan
         mainPage.getChildren().add(hlmByr);
         mainPage.getChildren().add(succeedScene);
+
         mainPage.getChildren().add(cancelConfirm);
         mainPage.getChildren().add(notSucceedScene);
         hlmByr.setVisible(false);
         succeedScene.setVisible(false);
         cancelConfirm.setVisible(false);
         notSucceedScene.setVisible(false);
+
 
         // Menambahkan action objek
         Button qrBtn = homeC.getBcheckout();
@@ -80,7 +76,6 @@ public class HomeApp extends Application {
         cancelNotAgree.setOnMouseClicked(event -> cancelConfirm.setVisible(false));
         notSucceedClose.setOnMouseClicked(event -> notSucceedScene.setVisible(false));
         notSucceedClose.setOnMouseReleased(event -> cancelConfirm.setVisible(false));
-
 
         // Mengatur dan menampilkan stage
         stage.setTitle("Cinema Ticket Vending Machine");
