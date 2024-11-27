@@ -5,6 +5,7 @@ import com.oop.movieticketvendingmachine.models.Ticket;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -33,10 +34,10 @@ public class FilmDetailPopupController {
     private Button closeBtn;
 
     @FXML
-    private ChoiceBox<String> waktuTiket;
+    private ComboBox<String> waktuTiket;
 
     @FXML
-    private ChoiceBox<String> tempatDuduk;
+    private ComboBox<String> tempatDuduk;
 
 //    @FXML
 //    private VBox keranjangItemWrapper;

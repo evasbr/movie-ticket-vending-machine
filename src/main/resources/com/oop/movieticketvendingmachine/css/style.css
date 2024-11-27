@@ -7,6 +7,7 @@
     -fx-text-fill: white;
     -fx-text-alignment: center;
     -fx-alignment: center;
+    -fx-font-size: 20px;
 }
 
 .titletext{
