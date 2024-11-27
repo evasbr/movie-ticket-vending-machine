@@ -50,9 +50,9 @@ public class HomeApp extends Application {
         // Memunculkan scene popup dan membuatnya transparan
         mainPage.getChildren().add(hlmByr);
         mainPage.getChildren().add(succeedScene);
-
         mainPage.getChildren().add(cancelConfirm);
         mainPage.getChildren().add(notSucceedScene);
+
         hlmByr.setVisible(false);
         succeedScene.setVisible(false);
         cancelConfirm.setVisible(false);

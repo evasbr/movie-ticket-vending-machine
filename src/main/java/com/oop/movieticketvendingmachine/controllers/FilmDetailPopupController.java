@@ -39,6 +39,9 @@ public class FilmDetailPopupController {
     @FXML
     private ComboBox<String> tempatDuduk;
 
+    @FXML
+    private Label thrgtiket;
+
 //    @FXML
 //    private VBox keranjangItemWrapper;
 
@@ -122,4 +125,13 @@ public class FilmDetailPopupController {
     public void setDeskripsi(String des){
         deskripsiFilm.setText(des);
     }
+
+    public void setThrgtiket(){
+        if (waktuTiket.isFocused() & tempatDuduk.isFocused()){
+            thrgtiket.setVisible(true);
+        }else{
+            thrgtiket.setVisible(false);
+        }
+    }
+
 }
