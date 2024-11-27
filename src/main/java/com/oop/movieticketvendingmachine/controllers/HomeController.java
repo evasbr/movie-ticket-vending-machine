@@ -24,8 +24,8 @@ public class HomeController {
 
     public void loadMovieCards() {
         List<Movie> movies = getMoviesList(); // Ambil daftar film dari database
-        contfilm.setHgap(40);
-        contfilm.setVgap(40);
+        contfilm.setHgap(20);
+        contfilm.setVgap(20);
         for (Movie movie : movies) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/FilmCard.fxml"));
