@@ -50,6 +50,9 @@ public class FilmDetailPopupController {
     private ComboBox<String> tempatDuduk;
 
     @FXML
+    private Label thargaTiket;
+
+    @FXML
     private AnchorPane root;
 
 
@@ -59,6 +62,8 @@ public class FilmDetailPopupController {
     public void initialize(int idFilm) {
         closeBtn.setOnAction(event -> root.setVisible(false));
         tempatDuduk.setDisable(true);
+        btnPesan.setDisable(true);
+        thargaTiket.setVisible(false);
 
         btnPesan.setOnAction(event -> {
             for(Ticket ticket : tickets){
@@ -70,8 +75,7 @@ public class FilmDetailPopupController {
                     break;
                 }
             }
-            Stage stage = (Stage) closeBtn.getScene().getWindow();
-            stage.close(); // Menutup stage
+            root.setVisible(false);
         });
 
         waktuTiket.setOnAction(event -> {
@@ -82,6 +86,11 @@ public class FilmDetailPopupController {
 
         tickets = getTicketList(idFilm);
         waktuDropDown();
+
+        tempatDuduk.setOnAction(event -> {
+            btnPesan.setDisable(false);
+            thargaTiket.setVisible(true);
+        });
     }
 
     public void kursiDropDown(){
@@ -158,12 +167,7 @@ public class FilmDetailPopupController {
         deskripsiFilm.setText(des);
     }
 
-//    public void setThrgtiket(){
-//        if (waktuTiket.isFocused() & tempatDuduk.isFocused()){
-//            thrgtiket.setVisible(true);
-//        }else{
-//            thrgtiket.setVisible(false);
-//        }
-//    }
-
+    public Button getButtonDenah(){
+        return buttonDenah;
+    }
 }
