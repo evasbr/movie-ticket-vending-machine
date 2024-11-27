@@ -1,12 +1,11 @@
 package com.oop.movieticketvendingmachine;
 
-import com.oop.movieticketvendingmachine.controllers.DummyBerandaController;
+import com.oop.movieticketvendingmachine.controllers.BerandaController;
 import com.oop.movieticketvendingmachine.controllers.KeranjangItemController;
 import com.oop.movieticketvendingmachine.controllers.KeranjangPopupController;
 import com.oop.movieticketvendingmachine.data.Film;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
@@ -17,23 +16,23 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class KeranjangApp extends Application {
+public class BerandaApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         // Inisialisasi halaman utama
-        FXMLLoader mainPageLoader = new FXMLLoader(KeranjangApp.class.getResource("fxml/DummyBeranda.fxml"));
+        FXMLLoader mainPageLoader = new FXMLLoader(BerandaApplication.class.getResource("fxml/beranda-view.fxml"));
         AnchorPane mainPage = mainPageLoader.load();
-        DummyBerandaController dummyBerandaC = mainPageLoader.getController();
+        BerandaController berandaC = mainPageLoader.getController();
 
         // Inisialisasi popup keranjang
-        FXMLLoader kPopupLoader = new FXMLLoader(KeranjangApp.class.getResource("fxml/KeranjangPopup.fxml"));
+        FXMLLoader kPopupLoader = new FXMLLoader(BerandaApplication.class.getResource("fxml/KeranjangPopup.fxml"));
         AnchorPane kPopup = kPopupLoader.load();
         KeranjangPopupController kPopupC = kPopupLoader.getController();
 
         // Pengaturan jendela
         Scene scene1 = new Scene(mainPage);
         Scene scene2 = new Scene(kPopup);
-        stage.setTitle("Hello!");
+        stage.setTitle("MOVIE TICKET VENDING MACHINE");
         stage.setScene(scene1);
 //        stage.centerOnScreen();
         stage.setResizable(false);
@@ -44,7 +43,7 @@ public class KeranjangApp extends Application {
         kPopup.setVisible(false);
 
         // Simpan objek interaktif berkaitan dengan keranjang
-        Button kBtn = dummyBerandaC.getKeranjangBtn();
+        Button kBtn = berandaC.getKeranjangBtn();
         Button kCloseBtn = kPopupC.getCloseBtn();
         VBox kItemWrapper = kPopupC.getKeranjangItemWrapper();
         // Hapus keranjangItem dummy
@@ -61,7 +60,7 @@ public class KeranjangApp extends Application {
         for (int i = 0; i < daftarFilm.size(); i++) {
             Film f = daftarFilm.get(i);
             for (int j = 0; j < 2; j++) {
-                FXMLLoader kItemLoader = new FXMLLoader(KeranjangApp.class.getResource("fxml/KeranjangItem.fxml"));
+                FXMLLoader kItemLoader = new FXMLLoader(BerandaApplication.class.getResource("fxml/KeranjangItem.fxml"));
                 HBox kItem = kItemLoader.load();
                 KeranjangItemController kItemC = kItemLoader.getController();
 

@@ -1,0 +1,97 @@
+#content{
+    -fx-background-color: #1E1B4B;
+}
+
+.label{
+    -fx-font-family: "Poppins";
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+}
+
+.screenfixed{
+    -fx-background-size: cover;
+}
+
+.bgcolor {
+    -fx-background-color: #6366F1;
+}
+
+.button {
+    -fx-background-color: rgba(79, 70, 229, 1);
+}
+
+.button:hover{
+    -fx-background-color: rgba(79, 70, 229, 0.5);
+}
+
+.contfilm{
+    -fx-background-color: rgba(79, 70, 229, 0.4);
+    -fx-background-radius: 16;
+    -fx-border-style: solid;
+    -fx-border-color: #6366F1;
+    -fx-border-width: 2px;
+    -fx-border-radius: 16;
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-transition: 0.7s;
+}
+
+.contfilm:hover{
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+#titletext{
+    -fx-font-weight: bold;
+    -fx-font-size: 40px;
+}
+
+#subtitletext{
+    -fx-font-weight: bold;
+    -fx-font-size: 24px;
+}
+
+#numbtutorpane Label{
+    -fx-font-size: 32px;
+    -fx-border-color: white;
+    -fx-border-style: solid;
+    -fx-border-radius: 50%;
+}
+
+#texttutorpane Label{
+    -fx-font-size: 16px;
+}
+
+#tnotiffilm{
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+}
+
+#keranjangBtn{
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-border-radius: 16;
+    -fx-font-family: "Poppins";
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-border-style: none;
+    -fx-background-radius: 8;
+}
+
+
+#bcheckout{
+    -fx-font-weight: bold;
+    -fx-font-size: 32px;
+    -fx-font-family: "Poppins";
+    -fx-text-fill: white;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-border-radius: 16;
+    -fx-border-style: solid;
+    -fx-border-color: white;
+    -fx-background-radius: 16;
+}
