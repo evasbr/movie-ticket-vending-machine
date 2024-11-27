@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="833.0" prefWidth="1280.0" styleClass="background" stylesheets="@../css/popups.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.NotSucceedController">
+   <children>
+      <AnchorPane layoutX="170.0" layoutY="65.0" prefHeight="704.0" prefWidth="940.0" styleClass="popupWrapper">
+         <stylesheets>
+            <URL value="@../css/style.css" />
+            <URL value="@../css/popups.css" />
+         </stylesheets>
+         <children>
+            <Label layoutX="294.0" layoutY="56.0" styleClass="titletext" text="Pembayaran Gagal" />
+            <Label alignment="CENTER" layoutX="78.0" layoutY="109.0" prefHeight="190.0" prefWidth="785.0" styleClass="subtitletext" text="Waktu pembayaran sudah melewati batas, transaksi dibatalkan. Anda bisa memesan tiket kembali." textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
+            <Button fx:id="closeBtn" layoutX="841.0" layoutY="21.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="80.0" stylesheets="@../css/closeBtn.css">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="closeBtn" />
+                  <String fx:value="purple" />
+               </styleClass>
+            </Button>
+            <ImageView fitHeight="327.0" fitWidth="440.0" layoutX="306.0" layoutY="288.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/notsucceed_wrong.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
