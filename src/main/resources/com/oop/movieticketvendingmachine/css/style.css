@@ -14,13 +14,21 @@
     -fx-font-weight: bold;
     -fx-font-size: 40px;
 }
+.titletext-smaller {
+    -fx-font-weight: bold;
+    -fx-font-size: 32px;
+}
+.titletext-smaller2 {
+    -fx-font-weight: bold;
+    -fx-font-size: 30px;
+}
 
 .subtitletext{
     -fx-font-weight: bold;
     -fx-font-size: 24px;
 }
 
-.button {
+.button-custom {
     -fx-font-weight: bold;
     -fx-font-size: 32px;
     -fx-font-family: "Poppins";
@@ -68,6 +76,7 @@
 
 #bkeranjang:hover{
     -fx-background-color: rgba(79, 70, 229, 0.5);
+    -fx-cursor: hand;
 }
 
 #bcheckout{
@@ -78,6 +87,7 @@
 
 #bcheckout:hover{
     -fx-background-color: rgba(79, 70, 229, 0.5);
+    -fx-cursor: hand;
 }
 
 .bkonfirmasi{

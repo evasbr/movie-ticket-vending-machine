@@ -21,7 +21,7 @@
          <children>
             <VBox alignment="CENTER" prefHeight="684.0" prefWidth="1235.0" spacing="60.0">
                <children>
-                  <Label text="Denah Tempat Duduk">
+                  <Label styleClass="titletext" stylesheets="@../css/style.css" text="Denah Tempat Duduk">
                      <font>
                         <Font name="System Bold" size="40.0" />
                      </font>

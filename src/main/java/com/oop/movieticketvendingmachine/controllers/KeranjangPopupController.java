@@ -12,6 +12,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 import static com.oop.movieticketvendingmachine.controllers.HomeController.movies;
 import static com.oop.movieticketvendingmachine.models.Keranjang.isiKeranjang;
@@ -44,6 +46,7 @@ public class KeranjangPopupController {
     public void loadKeranjangItem(){
         keranjangItemWrapper.getChildren().clear();  // Membersihkan semua item sebelumnya
         if(!isiKeranjang.isEmpty()){
+            int totalHarga = 0;
             for (Ticket tiketKeranjang : isiKeranjang) {
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/keranjangItem.fxml"));
@@ -60,7 +63,13 @@ public class KeranjangPopupController {
                             break;
                         }
                     }
-                    info = judul + " | " + tiketKeranjang.getNamaKursi() + " | " + tiketKeranjang.getJadwal();
+
+                    String pattern = "yyyy-MM-dd HH:mm";
+                    // Create an instance of SimpleDateFormat used for formatting
+                    // the string representation of date according to the chosen pattern
+                    DateFormat df = new SimpleDateFormat(pattern);
+                    String newJadwal = df.format(tiketKeranjang.getJadwal());
+                    info = judul + " | " + tiketKeranjang.getNamaKursi() + " | " + newJadwal;
 
                     controller.setInfo(info);
                     controller.setHargaTxt("Rp50.000,00");

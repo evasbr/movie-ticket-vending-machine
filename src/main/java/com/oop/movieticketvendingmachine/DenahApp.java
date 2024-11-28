@@ -39,7 +39,7 @@ public class DenahApp extends Application {
         stage.setAlwaysOnTop(true);
 
         // Load kursi di denah tempat duduk. Asumsikan parameter kedua adalah string
-        denahC.loadKursi(1, "2024-11-26 11:00:00");
+//        denahC.loadKursi(1, "2024-11-26 11:00:00");
 
         stage.show();
     }

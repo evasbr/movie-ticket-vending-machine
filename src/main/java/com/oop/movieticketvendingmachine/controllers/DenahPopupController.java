@@ -15,6 +15,7 @@ import java.sql.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.Date;
 
 public class DenahPopupController {
     @FXML
@@ -33,23 +34,16 @@ public class DenahPopupController {
             closeBtn.getParent().setVisible(false)
         );
 
-//        // Tutup J E N D E L A
-//        closeBtn.setOnAction(event -> {
-//            // Mendapatkan stage dari tombol yang diklik
-//            Stage stage = (Stage) closeBtn.getScene().getWindow();
-//            stage.close(); // Menutup stage
-//        });
-
-        closeBtn.getParent().setVisible(false);
+//        closeBtn.getParent().setVisible(false);
     }
 
     // Ingat, parameter keduanya STRING
-    public void loadKursi(int id_film, String dateStr) throws IOException {
+    public void loadKursi(int id_film, Date jadwal_film_raw) throws IOException {
         HashMap<String, Button> nama_ButtonList = getNama_ButtonList();
-
-        // Format string ke LocalDateTime
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime localDateTime = LocalDateTime.parse(dateStr, formatter);
+//
+//        // Format string ke LocalDateTime
+//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+//        LocalDateTime localDateTime = LocalDateTime.parse(dateStr, formatter);
 
         String query = "SELECT * FROM TIKET WHERE id_film = ? AND jadwal_film = ?";
         Connection connection = null;
@@ -59,7 +53,7 @@ public class DenahPopupController {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
             // Konversi LocalDateTime ke Timestamp
-            Timestamp jadwal_film = Timestamp.valueOf(localDateTime);
+            Timestamp jadwal_film = new Timestamp(jadwal_film_raw.getTime());
 
             // Set parameter untuk query
             preparedStatement.setInt(1, id_film);

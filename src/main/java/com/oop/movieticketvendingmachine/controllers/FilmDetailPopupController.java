@@ -5,6 +5,7 @@ import com.oop.movieticketvendingmachine.database.databaseConfig;
 import com.oop.movieticketvendingmachine.models.Keranjang;
 import com.oop.movieticketvendingmachine.models.Ticket;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
@@ -15,6 +16,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.*;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -72,10 +74,38 @@ public class FilmDetailPopupController {
                 String jadwalString = dateFormat.format(jadwalDate);
                 if((jadwalString.equalsIgnoreCase(waktuTiket.getValue())) && (ticket.getNamaKursi().equals(tempatDuduk.getValue()))){
                     Keranjang.tambahIsiKeranjang(ticket);
+//                    HomeApp.tharga.setText();
                     break;
                 }
             }
             root.setVisible(false);
+        });
+
+        buttonDenah.setOnAction(event -> {
+            FXMLLoader denahLoader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/DenahPopup.fxml"));
+            AnchorPane denah;
+            try {
+                denah = denahLoader.load();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            DenahPopupController denahC = denahLoader.getController();
+
+            for(Ticket ticket : tickets){
+                Timestamp jadwalDate = (Timestamp) ticket.getJadwal(); // Ambil jadwal tiket
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                String jadwalString = dateFormat.format(jadwalDate);
+                if((jadwalString.equalsIgnoreCase(waktuTiket.getValue())) && (ticket.getNamaKursi().equals(tempatDuduk.getValue()))){
+                    try {
+                        denahC.loadKursi(ticket.getIdFilm(), ticket.getJadwal());
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                }
+            }
+
+            root.getChildren().add(denah);
         });
 
         waktuTiket.setOnAction(event -> {
@@ -135,6 +165,9 @@ public class FilmDetailPopupController {
 
             // Proses hasil query
             while (resultSet.next()) {
+                String query2 = "SELECT harga FROM FILM WHERE id_flm=?";
+                PreparedStatement preparedStatement2 = connection.prepareStatement(query);
+
                 Ticket ticket = new Ticket(
                         resultSet.getInt("id_tiket"),
                         resultSet.getInt("id_film"),

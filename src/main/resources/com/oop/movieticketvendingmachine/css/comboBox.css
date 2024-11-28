@@ -8,6 +8,10 @@
     -fx-border-radius: 5px; /* Sudut border */
 }
 
+.combo-box:hover {
+    -fx-cursor: hand;
+}
+
 .combo-box .list-cell:filled {
     -fx-text-fill: white; /* Warna teks */
     -fx-font-weight: bold;

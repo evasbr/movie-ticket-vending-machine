@@ -152,4 +152,8 @@ public class HomeController {
     public Label getThrghome(){
         return thrghome;
     }
+
+    public void setThrghome(String val) {
+        thrghome.setText(val);
+    }
 }

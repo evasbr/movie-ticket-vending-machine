@@ -18,12 +18,14 @@ import java.io.IOException;
 import static com.oop.movieticketvendingmachine.models.Keranjang.isiKeranjang;
 
 public class HomeApp extends Application {
+    public static AnchorPane mainPage;
+    public static Label tharga;
 
     @Override
     public void start(Stage stage) throws IOException {
         // Memuat scene halaman home
         FXMLLoader mainPageLoader = new FXMLLoader(HomeApp.class.getResource("fxml/Home.fxml"));
-        AnchorPane mainPage = mainPageLoader.load();
+        mainPage = mainPageLoader.load();
         HomeController homeC = mainPageLoader.getController();
 
         homeC.loadMovieCards();
@@ -79,6 +81,7 @@ public class HomeApp extends Application {
         denah.setVisible(false);
 
         // Menambahkan action objek
+        tharga = homeC.getThrghome();
         Button qrBtn = homeC.getBcheckout();
         Button qrClose = byrC.getCloseBtn();
         ImageView succeedQr = byrC.getSucceedBtn();
