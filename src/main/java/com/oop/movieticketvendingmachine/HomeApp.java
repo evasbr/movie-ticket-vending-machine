@@ -28,18 +28,8 @@ public class HomeApp extends Application {
         mainPage = mainPageLoader.load();
         HomeController homeC = mainPageLoader.getController();
 
+        // Memuat poster dan judul film yang akan bisa diklik
         homeC.loadMovieCards();
-
-        // Inisialisasi popup film
-        FXMLLoader filmLoader = new FXMLLoader(getClass().getResource("fxml/FilmDetailPopUp.fxml"));
-        AnchorPane film = filmLoader.load();
-        FilmDetailPopupController filmC = filmLoader.getController();
-
-        // Inisialisasi popup denah
-        FXMLLoader denahLoader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/DenahPopup.fxml"));
-        AnchorPane denah = denahLoader.load();
-        DenahPopupController denahC = denahLoader.getController();
-//        goToDenahBtn.setOnAction(event -> denah.setVisible(true));
 
         // Membuat scene halaman bayar
         FXMLLoader bayarLoader = new FXMLLoader(HomeApp.class.getResource("fxml/qr-view.fxml"));
@@ -70,15 +60,11 @@ public class HomeApp extends Application {
         mainPage.getChildren().add(succeedScene);
         mainPage.getChildren().add(cancelConfirm);
         mainPage.getChildren().add(notSucceedScene);
-        mainPage.getChildren().add(film);
-        mainPage.getChildren().add(denah);
 
         hlmByr.setVisible(false);
         succeedScene.setVisible(false);
         cancelConfirm.setVisible(false);
         notSucceedScene.setVisible(false);
-        film.setVisible(false);
-        denah.setVisible(false);
 
         // Menambahkan action objek
         tharga = homeC.getThrghome();
@@ -89,34 +75,46 @@ public class HomeApp extends Application {
         Button cancelAgree = batalByrC.getAgreeBtn();
         Button cancelNotAgree = batalByrC.getNotAgreeBtn();
         Button notSucceedClose = notSucceedC.getCloseBtn();
-        Button openDenah = filmC.getButtonDenah();
-        Button closeDenah = denahC.getCloseBtn();
+
+        // Update total harga pertama (Rp 0)
+        updateTotalHarga();
 
         // Mengaktifkan action objek
-        qrBtn.setOnMouseClicked(event -> hlmByr.setVisible(true));
-        qrClose.setOnMouseReleased(event -> cancelConfirm.setVisible(true));
+        qrBtn.setOnMouseClicked(event -> {
+            if (isiKeranjang.size() <= 0) return;
+            hlmByr.setVisible(true);
+        });
+        qrClose.setOnAction(event -> cancelConfirm.setVisible(true));
         succeedQr.setOnMouseClicked(event -> {
             succeedScene.setVisible(true);
             for(Ticket ticket : isiKeranjang){
                 byrC.updateTicketStatus(ticket.getIdTiket());
             }
             Keranjang.kosongkan();
+
+            hlmByr.setVisible(false);
+            updateTotalHarga();
         });
-        succeedQr.setOnMouseReleased(event -> hlmByr.setVisible(false));
         succeedClose.setOnMouseClicked(event -> succeedScene.setVisible(false));
-        cancelAgree.setOnMouseClicked(event -> notSucceedScene.setVisible(true));
-        cancelAgree.setOnMouseReleased(event -> hlmByr.setVisible(false));
+        cancelAgree.setOnAction(event -> {
+            notSucceedScene.setVisible(true);
+            hlmByr.setVisible(false);
+        });
         cancelNotAgree.setOnMouseClicked(event -> cancelConfirm.setVisible(false));
-        notSucceedClose.setOnMouseClicked(event -> notSucceedScene.setVisible(false));
-        notSucceedClose.setOnMouseReleased(event -> cancelConfirm.setVisible(false));
-        openDenah.setOnMouseClicked(event -> denah.setVisible(true));
-        closeDenah.setOnMouseClicked(event -> denah.setVisible(false));
+        notSucceedClose.setOnAction(event -> {
+            notSucceedScene.setVisible(false);
+            cancelConfirm.setVisible(false);
+        });
 
         // Mengatur dan menampilkan stage
         stage.setTitle("Cinema Ticket Vending Machine");
         stage.setScene(home);
 //        stage.setAlwaysOnTop(true);
         stage.show();
+    }
+
+    public static void updateTotalHarga() {
+        tharga.setText("Rp " + Keranjang.getTotalBelanja() + ",00");
     }
 
     public static void main(String[] args) {

@@ -5,7 +5,6 @@ import com.oop.movieticketvendingmachine.models.Keranjang;
 import com.oop.movieticketvendingmachine.models.Movie;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -13,16 +12,12 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.oop.movieticketvendingmachine.models.Keranjang.isiKeranjang;
 
 public class HomeController {
     public static List<Movie> movies;
@@ -44,6 +39,7 @@ public class HomeController {
     @FXML
     public void initialize() {
         loadMovieCards();
+        System.out.println("movie size = " + movies.size());
         bkeranjang.setOnAction(event -> {
             try {
                 // Memuat FXML KeranjangPopup
@@ -61,8 +57,6 @@ public class HomeController {
 
     public void loadMovieCards() {
         movies = getMoviesList(); // Ambil daftar film dari database
-        contfilm.setHgap(20);
-        contfilm.setVgap(20);
         for (Movie movie : movies) {
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/FilmCard.fxml"));
@@ -78,27 +72,24 @@ public class HomeController {
                 // Membuat event handler untuk card
                 movieCard.setOnMouseClicked(event -> {
                     Integer movieId = (Integer) movieCard.getUserData(); // Ambil ID film dari card
-                    showMovieDetails(movieId, movie.getJudul(), movie.getGambar(), movie.getDeskripsi()); // Panggil metode untuk menampilkan detail film berdasarkan ID
+                    showMovieDetails(movie); // Panggil metode untuk menampilkan detail film berdasarkan Movie
                 });
-                contfilm.getChildren().add(movieCard);
 
-//                contfilm.getChildren().add(movieCard); // Tambahkan card film ke VBox
+                contfilm.getChildren().add(movieCard); // Tambahkan card film ke VBox
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    private void showMovieDetails(Integer movieId, String judul, String url, String deskripsi) {
+    private void showMovieDetails(Movie movie) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/FilmDetailPopUp.fxml"));
             AnchorPane movieCard = loader.load();
             FilmDetailPopupController controller = loader.getController();
-            // Menginisialisasi controller dengan movieId
-            controller.initialize(movieId);
-            controller.setJudulFilm(judul);
-            controller.setPosterFilm(url);
-            controller.setDeskripsi(deskripsi);
+
+            // Menginisialisasi controller dengan Movie object
+            controller.initialize(root, movie);
 
             // Buat pop up
             Stage stage = (Stage) root.getScene().getWindow();
@@ -151,9 +142,5 @@ public class HomeController {
 
     public Label getThrghome(){
         return thrghome;
-    }
-
-    public void setThrghome(String val) {
-        thrghome.setText(val);
     }
 }

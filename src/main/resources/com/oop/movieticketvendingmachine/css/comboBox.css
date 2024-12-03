@@ -1,3 +1,5 @@
+@import "colors.css";
+
 .combo-box {
     -fx-background-color: -choiceBox-bg; /* Warna latar belakang */
     -fx-font-color: white; /* Warna teks */
@@ -31,6 +33,10 @@
 
 .combo-box .list-view .cell:hover {
     -fx-background-color: #1E1B4B; /* Warna latar belakang saat hover */
+}
+
+.combo-box .arrow {
+    -fx-background-color: white;
 }
 
 #buttonDenah{

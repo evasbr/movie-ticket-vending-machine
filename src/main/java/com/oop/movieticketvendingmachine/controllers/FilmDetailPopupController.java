@@ -3,30 +3,24 @@ package com.oop.movieticketvendingmachine.controllers;
 import com.oop.movieticketvendingmachine.HomeApp;
 import com.oop.movieticketvendingmachine.database.databaseConfig;
 import com.oop.movieticketvendingmachine.models.Keranjang;
+import com.oop.movieticketvendingmachine.models.Movie;
 import com.oop.movieticketvendingmachine.models.Ticket;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class FilmDetailPopupController {
-    public static List<Ticket> tickets;
-
     @FXML
     private Label judulFilm;
 
@@ -57,127 +51,112 @@ public class FilmDetailPopupController {
     @FXML
     private AnchorPane root;
 
-
-    String filterWaktu ="";
+    private AnchorPane parentOfRoot; // Parent of popup
+    List<Ticket> tickets, ticketsWaktu, ticketsPesan;
+    HashMap<String, Timestamp> daftarJadwalHM = new LinkedHashMap<>();
+    Movie currentMovie;
+    Timestamp selectedTime;
+    List<String> selectedSeats = new LinkedList<>();
 
     @FXML
-    public void initialize(int idFilm) {
-        closeBtn.setOnAction(event -> root.setVisible(false));
+    public void initialize(AnchorPane parent, Movie movie) {
+        parentOfRoot = parent;
+        currentMovie = movie;
+        setJudulFilm(currentMovie.getJudul());
+        setPosterFilm(currentMovie.getGambar());
+        setDeskripsi(currentMovie.getDeskripsi());
+        closeBtn.setOnAction(event -> removePopup());
+
         tempatDuduk.setDisable(true);
         btnPesan.setDisable(true);
         buttonDenah.setDisable(true);
         thargaTiket.setVisible(false);
 
-        btnPesan.setOnAction(event -> {
-            for(Ticket ticket : tickets){
-                Timestamp jadwalDate = (Timestamp) ticket.getJadwal(); // Ambil jadwal tiket
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                String jadwalString = dateFormat.format(jadwalDate);
-                if((jadwalString.equalsIgnoreCase(waktuTiket.getValue())) && (ticket.getNamaKursi().equals(tempatDuduk.getValue()))){
-                    Keranjang.tambahIsiKeranjang(ticket);
-//                    HomeApp.tharga.setText();
-                    break;
-                }
-            }
-            root.setVisible(false);
+        ticketsWaktu = new LinkedList<>();
+        ticketsPesan = new LinkedList<>();
+        tickets = getTicketList(); // Menyimpan semua tiket yang tersedia dari movie saat ini
+        waktuDropDown();
+
+        waktuTiket.setOnAction(event -> {
+            selectedTime = daftarJadwalHM.get(waktuTiket.getValue());
+            buttonDenah.setDisable(false);
+            tempatDuduk.setDisable(false);
+            selectedSeats.clear();
+            updateTicketsWaktu();
+            kursiDropDown();
+            resetScrollTempatDuduk();
+        });
+
+        tempatDuduk.setOnAction(event -> {
+            selectedSeats.clear();
+            selectedSeats.add(tempatDuduk.getValue());
+
+            btnPesan.setDisable(false);
+            updateTharga();
+            thargaTiket.setVisible(true);
+            updateTicketsPesan();
         });
 
         buttonDenah.setOnAction(event -> {
             FXMLLoader denahLoader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/DenahPopup.fxml"));
             AnchorPane denah;
+            DenahPopupController denahC;
+
             try {
                 denah = denahLoader.load();
+                denahC = denahLoader.getController();
+                denahC.initialize(root);
+                denahC.updateKursi(ticketsWaktu, ticketsPesan);
             } catch (IOException e) {
                 throw new RuntimeException(e);
-            }
-            DenahPopupController denahC = denahLoader.getController();
-
-            for(Ticket ticket : tickets){
-                Timestamp jadwalDate = (Timestamp) ticket.getJadwal(); // Ambil jadwal tiket
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-                String jadwalString = dateFormat.format(jadwalDate);
-                if((jadwalString.equalsIgnoreCase(waktuTiket.getValue())) && (ticket.getNamaKursi().equals(tempatDuduk.getValue()))){
-                    try {
-                        denahC.loadKursi(ticket.getIdFilm(), ticket.getJadwal());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    break;
-                }
             }
 
             root.getChildren().add(denah);
         });
 
-        waktuTiket.setOnAction(event -> {
-            filterWaktu = waktuTiket.getValue();
-            buttonDenah.setDisable(false);
-            tempatDuduk.setDisable(false);
-            kursiDropDown();
-        });
+        btnPesan.setOnAction(event -> {
+            for (Ticket ticket : ticketsPesan) {
+                Keranjang.tambahIsiKeranjang(ticket);
+                HomeApp.updateTotalHarga();
+            }
 
-        tickets = getTicketList(idFilm);
-        waktuDropDown();
-
-        tempatDuduk.setOnAction(event -> {
-            btnPesan.setDisable(false);
-            thargaTiket.setVisible(true);
+            removePopup();
         });
     }
 
-    public void kursiDropDown(){
-        Set<String> itemKursi = new LinkedHashSet<>();
-        tempatDuduk.getItems().clear();
-
-        for(Ticket ticket : tickets){
-            itemKursi.add(ticket.getNamaKursi());
-        }
-
-        tempatDuduk.getItems().addAll(itemKursi);
-    }
-
-    public void waktuDropDown(){
-        Set<String> itemWaktu = new LinkedHashSet<>();
-        waktuTiket.getItems().clear();
-
-        for(Ticket ticket : tickets){
-            Timestamp jadwalDate = (Timestamp) ticket.getJadwal(); // Ambil jadwal tiket
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
-            String jadwalString = dateFormat.format(jadwalDate);
-            itemWaktu.add(jadwalString);
-        }
-
-        waktuTiket.getItems().addAll(itemWaktu);
-    }
-
-    public List<Ticket> getTicketList(int idFilm) {
-        String query = "SELECT * FROM TIKET WHERE status_tiket = 'tersedia' AND id_film = ?";
+    public List<Ticket> getTicketList() {
+        // id_film tidak dicari karena sudah didapat dari Movie currentMovie
+        String query = "SELECT id_tiket, nama_kursi, jadwal_film, status_tiket FROM TIKET WHERE status_tiket = 'tersedia' AND id_film = ?";
         Connection connection = null;
-        List<Ticket> daftarTiket = new ArrayList<>();
+        List<Ticket> daftarTiket = new LinkedList<>();
 
         try {
             connection = databaseConfig.connectDB();
             PreparedStatement preparedStatement = connection.prepareStatement(query);
 
             // Set parameter untuk query
-            preparedStatement.setInt(1, idFilm); // Mengisi id_film
+            preparedStatement.setInt(1, currentMovie.getId()); // Mengisi id_film
 
             // Eksekusi query
             ResultSet resultSet = preparedStatement.executeQuery();
 
             // Proses hasil query
             while (resultSet.next()) {
-                String query2 = "SELECT harga FROM FILM WHERE id_flm=?";
-                PreparedStatement preparedStatement2 = connection.prepareStatement(query);
+                Timestamp jadwalTs = resultSet.getTimestamp("jadwal_film");
+                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+                String jadwalStr = dateFormat.format(jadwalTs);
 
                 Ticket ticket = new Ticket(
                         resultSet.getInt("id_tiket"),
-                        resultSet.getInt("id_film"),
-                        resultSet.getTimestamp("jadwal_film"),
+                        currentMovie.getId(),
+                        jadwalTs,
                         resultSet.getString("nama_kursi"),
-                        resultSet.getString("status_tiket")
+                        resultSet.getString("status_tiket"),
+                        currentMovie.getHarga()
                 );
+
                 daftarTiket.add(ticket);
+                daftarJadwalHM.put(jadwalStr, jadwalTs);
             }
 
             // Menutup ResultSet dan PreparedStatement
@@ -186,7 +165,22 @@ public class FilmDetailPopupController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         return daftarTiket;
+    }
+
+    public void waktuDropDown(){
+        // Menambahkan seluruh key dari daftarJadwalHM yang sudah berupa String dari value-nya yang berbentuk Timestamp
+        for (String str : daftarJadwalHM.keySet()) {
+            waktuTiket.getItems().add(str);
+        }
+    }
+
+    public void kursiDropDown(){
+        tempatDuduk.getItems().clear();
+        for(Ticket ticket : ticketsWaktu){
+            tempatDuduk.getItems().add(ticket.getNamaKursi());
+        }
     }
 
     public void setJudulFilm(String judul){
@@ -202,7 +196,52 @@ public class FilmDetailPopupController {
         deskripsiFilm.setText(des);
     }
 
+    public void updateTharga(){
+        thargaTiket.setText("Harga : Rp " + selectedSeats.size() * currentMovie.getHarga() + ",00");
+    }
+
     public Button getButtonDenah(){
         return buttonDenah;
+    }
+
+    public void removePopup() {
+        parentOfRoot.getChildren().remove(root);
+    }
+
+    // Update tiket berdasarkan waktu dipilih
+    public void updateTicketsWaktu() {
+        ticketsWaktu.clear();
+
+        for (Ticket ticket : tickets) {
+            if (ticket.getJadwal().equals(selectedTime)) {
+                ticketsWaktu.add(ticket);
+            }
+        }
+    }
+
+    public void updateTicketsPesan() {
+        ticketsPesan.clear();
+        int ticketAdded = 0;
+
+        // Dapatkan tiket yang sudah difilter berdasarkan waktu terlebih dahulu
+        for (Ticket ticket : ticketsWaktu) {
+            // Filter tiket berdasarkan nama kursi
+            if (ticket.getNamaKursi().equals(selectedSeats.get(ticketAdded))) {
+                ticketsPesan.add(ticket);
+                ticketAdded++;
+
+                // Keluar dari loop saat jumlah tiket dipesan sudah sesuai dengan jumlah bangku dipilih
+                if (ticketAdded >= selectedSeats.size()) {
+                    break;
+                }
+            }
+        }
+    }
+
+    public void resetScrollTempatDuduk() {
+        ListView<?> listView = (ListView<?>) tempatDuduk.lookup(".list-view");
+        if (listView != null) {
+            listView.scrollTo(0); // Reset posisi scroll ke awal
+        }
     }
 }

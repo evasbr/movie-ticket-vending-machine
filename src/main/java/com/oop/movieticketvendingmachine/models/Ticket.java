@@ -1,15 +1,15 @@
 package com.oop.movieticketvendingmachine.models;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Ticket {
     private int id_tiket;
     private int id_film;
-    private Date jadwal_film;
+    private Timestamp jadwal_film;
     private String nama_kursi;
     private String status_tiket;
 
-    public Ticket(int id_tiket, int id_film, Date jadwal_film, String nama_kursi, String status_tiket){
+    public Ticket(int id_tiket, int id_film, Timestamp jadwal_film, String nama_kursi, String status_tiket, int harga_tiket){
         this.id_tiket = id_tiket;
         this.id_film = id_film;
         this.jadwal_film = jadwal_film;
@@ -33,7 +33,7 @@ public class Ticket {
         return status_tiket;
     }
 
-    public Date getJadwal(){
+    public Timestamp getJadwal(){
         return jadwal_film;
     }
 

@@ -9,7 +9,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -29,15 +28,11 @@
                     <children>
                         <VBox alignment="TOP_CENTER" prefHeight="682.0" prefWidth="394.0" styleClass="filmDetailTitle">
                             <children>
-                                <Label fx:id="judulFilm" alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="38.0" styleClass="subtitletext" text="BILA BESOK IBU TIADA" textAlignment="CENTER">
+                                <Label fx:id="judulFilm" alignment="CENTER" contentDisplay="CENTER" prefHeight="38.0" styleClass="subtitletext" text="GLADIATOR II" textAlignment="CENTER">
                                     <font>
                                         <Font name="System Bold" size="24.0" />
                                     </font></Label>
-                        <Pane>
-                           <children>
-                                      <ImageView fx:id="posterFilm" fitHeight="461.0" fitWidth="358.0" pickOnBounds="true" preserveRatio="true" />
-                           </children>
-                        </Pane>
+                                <ImageView fx:id="posterFilm" fitHeight="461.0" fitWidth="358.0" pickOnBounds="true" preserveRatio="true" />
                             </children>
                         </VBox>
                         <VBox alignment="TOP_CENTER" layoutX="11.0" layoutY="11.0" prefHeight="682.0" prefWidth="479.0" spacing="40.0">

@@ -1,21 +1,15 @@
 package com.oop.movieticketvendingmachine.controllers;
 
 import com.oop.movieticketvendingmachine.DenahApp;
-import com.oop.movieticketvendingmachine.database.databaseConfig;
-import com.oop.movieticketvendingmachine.models.Kursi;
 import com.oop.movieticketvendingmachine.models.Ticket;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.Date;
 
 public class DenahPopupController {
     @FXML
@@ -28,63 +22,43 @@ public class DenahPopupController {
     private Button closeBtn;
 
     @FXML
-    public void initialize() {
-//         Tutup P O P U P
-        closeBtn.setOnAction(event ->
-            closeBtn.getParent().setVisible(false)
-        );
+    private AnchorPane root;
 
-//        closeBtn.getParent().setVisible(false);
+    private AnchorPane parentOfRoot; // Parent of popup
+    HashMap<String, Button> kursiButtonHM;
+    HashMap<String, Ticket> kursiTicketsWktHM;
+    private List<Ticket> tksWaktu, tksPesan;
+
+    @FXML
+    public void initialize(AnchorPane parent) {
+        parentOfRoot = parent;
+        closeBtn.setOnAction(event -> removePopup());
+        kursiButtonHM = new HashMap<>();
+        kursiTicketsWktHM = new HashMap<>();
     }
 
-    // Ingat, parameter keduanya STRING
-    public void loadKursi(int id_film, Date jadwal_film_raw) throws IOException {
-        HashMap<String, Button> nama_ButtonList = getNama_ButtonList();
-//
-//        // Format string ke LocalDateTime
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-//        LocalDateTime localDateTime = LocalDateTime.parse(dateStr, formatter);
+    public void updateKursi(List<Ticket> ticketsWaktu, List<Ticket> ticketsPesan) throws IOException {
+        tksWaktu = ticketsWaktu;
+        tksPesan = ticketsPesan;
+        updateNama_ButtonList();
 
-        String query = "SELECT * FROM TIKET WHERE id_film = ? AND jadwal_film = ?";
-        Connection connection = null;
+        for (Ticket ticket : tksWaktu) {
+            Button btnRef = kursiButtonHM.get(ticket.getNamaKursi());
+            kursiTicketsWktHM.put(ticket.getNamaKursi(), ticket);
 
-        try {
-            connection = databaseConfig.connectDB();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-
-            // Konversi LocalDateTime ke Timestamp
-            Timestamp jadwal_film = new Timestamp(jadwal_film_raw.getTime());
-
-            // Set parameter untuk query
-            preparedStatement.setInt(1, id_film);
-            preparedStatement.setTimestamp(2, jadwal_film);
-
-            // Eksekusi query
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            // Proses hasil query
-            while (resultSet.next()) {
-                String namaKursi = resultSet.getString("nama_kursi");
-                Button btnRef = nama_ButtonList.get(namaKursi);
-                switch (resultSet.getString("status_tiket")) {
-                    case "tersedia":
-                        btnRef.getStyleClass().remove("kursiBtnUnavail");
-                        btnRef.getStyleClass().add("kursiBtnAvail");
-                        break;
-                }
+            if (ticketsPesan.contains(ticket)) {
+                btnRef.getStyleClass().remove("kursiBtnUnavail");
+                btnRef.getStyleClass().add("kursiBtnSelect");
+            } else if (ticket.getStatus_tiket().equals("tersedia")) {
+                btnRef.getStyleClass().remove("kursiBtnUnavail");
+                btnRef.getStyleClass().add("kursiBtnAvail");
             }
-
-            // Menutup ResultSet dan PreparedStatement
-            resultSet.close();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
-    public HashMap<String, Button> getNama_ButtonList() throws IOException {
+    public void updateNama_ButtonList () throws IOException {
+        kursiButtonHM.clear();
         final String[] labels = {"A", "B", "C", "D"};
-        HashMap<String, Button> nama_ButtonList = new HashMap<>();
 
         for (int i = 0; i < labels.length; i++) {
             for (int j = 1; j <= 12; j++) {
@@ -100,22 +74,27 @@ public class DenahPopupController {
                 }
 
                 krsBtn.setOnAction(event -> {
-                    if (krsBtn.getStyleClass().contains("kursiBtnUnavail"))
+                    // Tidak memiliki class select ataupun avail
+                    if (krsBtn.getStyleClass().contains("kursiBtnUnavail")) {
                         return;
+                    }
 
+                    // Ubah ke seleksi
                     if (krsBtn.getStyleClass().remove("kursiBtnAvail")) {
                         krsBtn.getStyleClass().add("kursiBtnSelect");
-                    } else {
+                        tksPesan.add(kursiTicketsWktHM.get(krsBtn.getText()));
+                    }
+                    // Batal seleksi
+                    else {
                         krsBtn.getStyleClass().remove("kursiBtnSelect");
                         krsBtn.getStyleClass().add("kursiBtnAvail");
+                        tksPesan.remove(kursiTicketsWktHM.get(krsBtn.getText()));
                     }
                 });
 
-                nama_ButtonList.put(namaKursi, krsBtn);
+                kursiButtonHM.put(namaKursi, krsBtn);
             }
         }
-
-        return nama_ButtonList;
     }
 
     public FlowPane getLeftGrid() {
@@ -128,5 +107,9 @@ public class DenahPopupController {
 
     public Button getCloseBtn() {
         return closeBtn;
+    }
+
+    public void removePopup() {
+        parentOfRoot.getChildren().remove(root);
     }
 }
