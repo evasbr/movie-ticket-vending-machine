@@ -34,7 +34,7 @@ public class FilmDetailPopupController {
     private ImageView posterFilm;
 
     @FXML
-    private Text deskripsiFilm;
+    private Label deskripsiFilm;
 
     @FXML
     private Button buttonDenah;
@@ -65,6 +65,7 @@ public class FilmDetailPopupController {
         closeBtn.setOnAction(event -> root.setVisible(false));
         tempatDuduk.setDisable(true);
         btnPesan.setDisable(true);
+        buttonDenah.setDisable(true);
         thargaTiket.setVisible(false);
 
         btnPesan.setOnAction(event -> {
@@ -110,6 +111,7 @@ public class FilmDetailPopupController {
 
         waktuTiket.setOnAction(event -> {
             filterWaktu = waktuTiket.getValue();
+            buttonDenah.setDisable(false);
             tempatDuduk.setDisable(false);
             kursiDropDown();
         });

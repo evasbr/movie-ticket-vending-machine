@@ -5,12 +5,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="833.0" prefWidth="1280.0" styleClass="background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.FilmDetailPopupController">
     <children>
@@ -20,27 +21,36 @@
                     <font>
                         <Font name="System Bold" size="25.0" />
                     </font>
-                    <styleClass>
-                        <String fx:value="closeBtn" />
-                        <String fx:value="purple" />
-                    </styleClass></Button>
+               <styleClass>
+                  <String fx:value="closeBtn" />
+                  <String fx:value="purple" />
+               </styleClass></Button>
                 <HBox alignment="TOP_CENTER" layoutX="90.0" layoutY="53.0" prefHeight="682.0" prefWidth="857.0" spacing="20.0">
                     <children>
-                        <VBox alignment="TOP_CENTER" prefHeight="682.0" prefWidth="394.0">
+                        <VBox alignment="TOP_CENTER" prefHeight="682.0" prefWidth="394.0" styleClass="filmDetailTitle">
                             <children>
-                                <Label fx:id="judulFilm" alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="38.0" prefWidth="219.0" text="Label" textAlignment="CENTER">
+                                <Label fx:id="judulFilm" alignment="TOP_CENTER" contentDisplay="CENTER" prefHeight="38.0" styleClass="subtitletext" text="BILA BESOK IBU TIADA" textAlignment="CENTER">
                                     <font>
                                         <Font name="System Bold" size="24.0" />
                                     </font></Label>
-                                <ImageView fx:id="posterFilm" fitHeight="461.0" fitWidth="358.0" pickOnBounds="true" preserveRatio="true" />
+                        <Pane>
+                           <children>
+                                      <ImageView fx:id="posterFilm" fitHeight="461.0" fitWidth="358.0" pickOnBounds="true" preserveRatio="true" />
+                           </children>
+                        </Pane>
                             </children>
                         </VBox>
-                        <VBox alignment="TOP_CENTER" layoutX="11.0" layoutY="11.0" prefHeight="682.0" prefWidth="479.0" spacing="48.0">
+                        <VBox alignment="TOP_CENTER" layoutX="11.0" layoutY="11.0" prefHeight="682.0" prefWidth="479.0" spacing="40.0">
                             <children>
-                                <Text fx:id="deskripsiFilm" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="448.3333237171173">
-                                    <font>
-                                        <Font size="14.0" />
-                                    </font></Text>
+                        <ScrollPane fx:id="awal" fitToWidth="true" hbarPolicy="NEVER" maxHeight="200.0" prefWidth="462.0">
+                          <content>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="200.0">
+                                 <children>
+                                    <Label fx:id="deskripsiFilm" maxWidth="448.0" text="Almut (Florence Pugh) seorang koki yang sedang naik daun dan Tobias (Andrew Garfield) seorang pria yang baru saja bercerai mendapati hidup mereka berubah selamanya Ketika sebuah pertemuan tak sengaja mempertemukan mereka, dalam kisah romansa yang sangat mengharukan selkama satu decade. TES." textAlignment="CENTER" textOverrun="CLIP" wrapText="true" />
+                                 </children>
+                              </AnchorPane>
+                          </content>
+                        </ScrollPane>
                                 <VBox alignment="CENTER_LEFT" prefHeight="220.0" prefWidth="389.0" spacing="20.0" stylesheets="@../css/style.css">
                                     <children>
                                         <ComboBox fx:id="waktuTiket" prefHeight="70.0" prefWidth="420.0" stylesheets="@../css/comboBox.css" />
@@ -61,5 +71,6 @@
         <URL value="@../css/popups.css" />
         <URL value="@../css/comboBox.css" />
         <URL value="@../css/closeBtn.css" />
+      <URL value="@../css/style.css" />
     </stylesheets>
 </AnchorPane>

@@ -115,7 +115,7 @@ public class HomeApp extends Application {
         // Mengatur dan menampilkan stage
         stage.setTitle("Cinema Ticket Vending Machine");
         stage.setScene(home);
-        stage.setAlwaysOnTop(true);
+//        stage.setAlwaysOnTop(true);
         stage.show();
     }
 
