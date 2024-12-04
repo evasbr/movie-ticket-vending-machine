@@ -1,6 +1,7 @@
 package com.oop.movieticketvendingmachine.models;
 
 public class Movie {
+
     private int id;
     private String judul;
     private String gambar;

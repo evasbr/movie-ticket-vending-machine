@@ -1,9 +1,9 @@
 package com.oop.movieticketvendingmachine;
 
-
 import com.oop.movieticketvendingmachine.controllers.*;
 import com.oop.movieticketvendingmachine.models.Keranjang;
 import com.oop.movieticketvendingmachine.models.Ticket;
+import com.oop.movieticketvendingmachine.models.Utils;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -18,44 +18,45 @@ import java.io.IOException;
 import static com.oop.movieticketvendingmachine.models.Keranjang.isiKeranjang;
 
 public class HomeApp extends Application {
-    public static AnchorPane mainPage;
-    public static Label tharga;
+    static AnchorPane mainPage;
+    static Label tharga;
+    static Stage stage;
 
     @Override
     public void start(Stage stage) throws IOException {
+        HomeApp.stage = stage;
+
         // Memuat scene halaman home
-        FXMLLoader mainPageLoader = new FXMLLoader(HomeApp.class.getResource("fxml/Home.fxml"));
+        FXMLLoader mainPageLoader = new FXMLLoader(getClass().getResource("fxml/Home.fxml"));
         mainPage = mainPageLoader.load();
         HomeController homeC = mainPageLoader.getController();
 
         // Memuat poster dan judul film yang akan bisa diklik
         homeC.loadMovieCards();
 
-        // Membuat scene halaman bayar
-        FXMLLoader bayarLoader = new FXMLLoader(HomeApp.class.getResource("fxml/qr-view.fxml"));
+        // Membuat popup halaman bayar
+        FXMLLoader bayarLoader = new FXMLLoader(getClass().getResource("fxml/qr-view.fxml"));
         AnchorPane hlmByr = bayarLoader.load();
         QrController byrC = bayarLoader.getController();
 
-        // Membuat scene pembayaran berhasil
-        FXMLLoader succeedLoader = new FXMLLoader(HomeApp.class.getResource("fxml/succeed-view.fxml"));
+        // Membuat popup pembayaran berhasil
+        FXMLLoader succeedLoader = new FXMLLoader(getClass().getResource("fxml/succeed-view.fxml"));
         AnchorPane succeedScene = succeedLoader.load();
         SucceedController succeedC = succeedLoader.getController();
 
-        // Membuat scene pembayaran gagal
-        FXMLLoader notSucceedLoader = new FXMLLoader(HomeApp.class.getResource("fxml/notsucceed-view.fxml"));
+        // Membuat popup pembayaran gagal
+        FXMLLoader notSucceedLoader = new FXMLLoader(getClass().getResource("fxml/notsucceed-view.fxml"));
         AnchorPane notSucceedScene = notSucceedLoader.load();
         NotSucceedController notSucceedC = notSucceedLoader.getController();
 
-        // Membuat scene konfirmasi bayar
-        FXMLLoader cancelConfirmLoader = new FXMLLoader(HomeApp.class.getResource("fxml/batalbayar-view.fxml"));
+        // Membuat popup konfirmasi bayar
+        FXMLLoader cancelConfirmLoader = new FXMLLoader(getClass().getResource("fxml/batalbayar-view.fxml"));
         AnchorPane cancelConfirm = cancelConfirmLoader.load();
         BatalBayarController batalByrC = cancelConfirmLoader.getController();
 
         Scene home = new Scene(mainPage);
-        Scene cancel = new Scene(cancelConfirm);
-        Scene notSucceed = new Scene(notSucceedScene);
 
-        // Memunculkan scene popup dan membuatnya transparan
+        // Memunculkan seluruh popup dan membuatnya transparan
         mainPage.getChildren().add(hlmByr);
         mainPage.getChildren().add(succeedScene);
         mainPage.getChildren().add(cancelConfirm);
@@ -79,9 +80,9 @@ public class HomeApp extends Application {
         // Update total harga pertama (Rp 0)
         updateTotalHarga();
 
-        // Mengaktifkan action objek
-        qrBtn.setOnMouseClicked(event -> {
-            if (isiKeranjang.size() <= 0) return;
+        // Event handler untuk action objek
+        qrBtn.setOnAction(event -> {
+            if (isiKeranjang.isEmpty()) return;
             hlmByr.setVisible(true);
         });
         qrClose.setOnAction(event -> cancelConfirm.setVisible(true));
@@ -95,12 +96,12 @@ public class HomeApp extends Application {
             hlmByr.setVisible(false);
             updateTotalHarga();
         });
-        succeedClose.setOnMouseClicked(event -> succeedScene.setVisible(false));
+        succeedClose.setOnAction(event -> succeedScene.setVisible(false));
         cancelAgree.setOnAction(event -> {
             notSucceedScene.setVisible(true);
             hlmByr.setVisible(false);
         });
-        cancelNotAgree.setOnMouseClicked(event -> cancelConfirm.setVisible(false));
+        cancelNotAgree.setOnAction(event -> cancelConfirm.setVisible(false));
         notSucceedClose.setOnAction(event -> {
             notSucceedScene.setVisible(false);
             cancelConfirm.setVisible(false);
@@ -109,12 +110,17 @@ public class HomeApp extends Application {
         // Mengatur dan menampilkan stage
         stage.setTitle("Cinema Ticket Vending Machine");
         stage.setScene(home);
-//        stage.setAlwaysOnTop(true);
+        stage.setAlwaysOnTop(true);
         stage.show();
+        stage.setAlwaysOnTop(false);
     }
 
     public static void updateTotalHarga() {
-        tharga.setText("Rp " + Keranjang.getTotalBelanja() + ",00");
+        tharga.setText(Utils.IDRFormat(Keranjang.getTotalBelanja()));
+    }
+
+    public static void setWindowTitle(String title) {
+        stage.setTitle(title);
     }
 
     public static void main(String[] args) {

@@ -10,15 +10,11 @@ public class BatalBayarController {
     @FXML
     private Button notAgreeBtn;
 
-    @FXML
-    public void initialize() {
-    }
-
-    public Button getAgreeBtn(){
+    public Button getAgreeBtn() {
         return agreeBtn;
     }
 
-    public Button getNotAgreeBtn(){
+    public Button getNotAgreeBtn() {
         return notAgreeBtn;
     }
 }

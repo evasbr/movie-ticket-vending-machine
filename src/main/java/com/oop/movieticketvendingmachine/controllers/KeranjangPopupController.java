@@ -1,8 +1,8 @@
 package com.oop.movieticketvendingmachine.controllers;
 
 import com.oop.movieticketvendingmachine.models.Keranjang;
-import com.oop.movieticketvendingmachine.models.Movie;
 import com.oop.movieticketvendingmachine.models.Ticket;
+import com.oop.movieticketvendingmachine.models.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
@@ -12,10 +12,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
-import static com.oop.movieticketvendingmachine.controllers.HomeController.movies;
+import static com.oop.movieticketvendingmachine.controllers.HomeController.movieFromId;
 import static com.oop.movieticketvendingmachine.models.Keranjang.isiKeranjang;
 
 public class KeranjangPopupController {
@@ -34,55 +32,35 @@ public class KeranjangPopupController {
     @FXML
     public void initialize() {
         loadKeranjangItem();
-        totalKeranjang.setText("Rp " + String.valueOf(Keranjang.getTotalBelanja()) + ",00");
+        updateTotalKeranjang();
 
         closeBtn.setOnAction(event -> root.setVisible(false));
     }
 
-    public void getTotalKeranjang(Label totalKeranjang) {
-        this.totalKeranjang = totalKeranjang;
-    }
-
     public void loadKeranjangItem(){
-        keranjangItemWrapper.getChildren().clear();  // Membersihkan semua item sebelumnya
         if(!isiKeranjang.isEmpty()){
-            int totalHarga = 0;
-            for (Ticket tiketKeranjang : isiKeranjang) {
+            for (Ticket item : isiKeranjang) {
                 try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/keranjangItem.fxml"));
-                    HBox itemKeranjang = loader.load();  // Memuat item keranjang
+                    FXMLLoader krjItemLoader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/keranjangItem.fxml"));
+                    HBox krjItem = krjItemLoader.load();  // Memuat item keranjang
 
-                    KeranjangItemController controller = loader.getController();
-                    String info = "";
-                    String judul = "";
+                    KeranjangItemController krjItemC = krjItemLoader.getController();
 
+                    krjItemC.setInfo(item.toString());
+                    krjItemC.setHargaTxt(Utils.IDRFormat(movieFromId(item.getIdFilm()).getHarga()));;
 
-                    for (Movie movie : movies) {
-                        if (movie.getId() == tiketKeranjang.getIdFilm()) {
-                            judul = movie.getJudul();
-                            break;
-                        }
-                    }
-
-                    String pattern = "yyyy-MM-dd HH:mm";
-                    // Create an instance of SimpleDateFormat used for formatting
-                    // the string representation of date according to the chosen pattern
-                    DateFormat df = new SimpleDateFormat(pattern);
-                    String newJadwal = df.format(tiketKeranjang.getJadwal());
-                    info = judul + " | " + tiketKeranjang.getNamaKursi() + " | " + newJadwal;
-
-                    controller.setInfo(info);
-                    controller.setHargaTxt("Rp50.000,00");
+                    keranjangItemWrapper.getChildren().add(krjItem);  // Menambahkan item ke UI
 
                     // Mendapatkan tombol hapus dan menambahkan event handler untuk menghapus item
-                    controller.getDelBtn().setOnAction(event -> {
-                        Keranjang.hapusIsiKeranjang(tiketKeranjang.getIdTiket());
-                        loadKeranjangItem();  // Memperbarui tampilan setelah penghapusan
-                        totalKeranjang.setText("Rp " + String.valueOf(Keranjang.getTotalBelanja()) + ",00");
+                    krjItemC.getDelBtn().setOnAction(event -> {
+                        Keranjang.hapusIsiKeranjang(item.getIdTiket());
+                        keranjangItemWrapper.getChildren().remove(krjItem);
+                        updateTotalKeranjang();
+
+                        if (isiKeranjang.isEmpty()){
+                            keranjangItemWrapper.getChildren().add(new Label("Tidak ada isi keranjang"));
+                        }
                     });
-
-                    keranjangItemWrapper.getChildren().add(itemKeranjang);  // Menambahkan item ke UI
-
 
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -93,17 +71,11 @@ public class KeranjangPopupController {
         }
     }
 
-
     public Button getCloseBtn() {
         return closeBtn;
     }
 
-    public VBox getKeranjangItemWrapper() {
-        return keranjangItemWrapper;
+    public void updateTotalKeranjang() {
+        totalKeranjang.setText(Utils.IDRFormat(Keranjang.getTotalBelanja()));
     }
-
-    public Label getTotalKeranjang(){
-        return totalKeranjang;
-    }
-
 }

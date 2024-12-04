@@ -7,12 +7,7 @@ public class NotSucceedController {
     @FXML
     private Button closeBtn;
 
-    @FXML
-    public void initialize() {
-    }
-
     public Button getCloseBtn(){
         return closeBtn;
     }
-
 }

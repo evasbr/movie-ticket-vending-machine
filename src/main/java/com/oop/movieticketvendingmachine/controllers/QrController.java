@@ -15,11 +15,6 @@ public class QrController {
     @FXML
     private ImageView succeedBtn;
 
-    @FXML
-    public void initialize() {
-
-    }
-
     public Button getCloseBtn() {
         return closeBtn;
     }
@@ -52,6 +47,7 @@ public class QrController {
         } catch (Exception e) {
             e.printStackTrace();  // Menampilkan stack trace jika ada kesalahan
         }
+
         return isUpdated;  // Mengembalikan apakah update berhasil
     }
 }

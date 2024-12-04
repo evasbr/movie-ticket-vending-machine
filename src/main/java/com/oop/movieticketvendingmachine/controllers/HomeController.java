@@ -1,7 +1,7 @@
 package com.oop.movieticketvendingmachine.controllers;
 
+import com.oop.movieticketvendingmachine.HomeApp;
 import com.oop.movieticketvendingmachine.database.databaseConfig;
-import com.oop.movieticketvendingmachine.models.Keranjang;
 import com.oop.movieticketvendingmachine.models.Movie;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -19,8 +18,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class HomeController {
-    public static List<Movie> movies;
+    public static List<Movie> movies = new ArrayList<>();
     @FXML
     private FlowPane contfilm;
 
@@ -44,10 +44,9 @@ public class HomeController {
             try {
                 // Memuat FXML KeranjangPopup
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/KeranjangPopup.fxml"));
-                AnchorPane keranjangScene = loader.load();  // Memuat tampilan dari FXML
-                Stage stage = (Stage) root.getScene().getWindow();
-                root.getChildren().add(keranjangScene);
-                stage.setTitle("Detail Film");
+                AnchorPane keranjangPopup = loader.load();  // Memuat tampilan dari FXML
+                root.getChildren().add(keranjangPopup);
+                HomeApp.setWindowTitle("Detail Film");
 
             } catch (IOException e) {
                 e.printStackTrace();
@@ -64,15 +63,13 @@ public class HomeController {
 
                 CardController controller = loader.getController();
 
-                controller.setImage(movie.getGambar()); // Set judul film
+                controller.setImage(movie.getGambar()); // Set gambar dan judul film
                 controller.setTitle(movie.getJudul());
-
-                movieCard.setUserData(movie.getId()); // Asumsi movie.getId() mengembalikan ID film
 
                 // Membuat event handler untuk card
                 movieCard.setOnMouseClicked(event -> {
-                    Integer movieId = (Integer) movieCard.getUserData(); // Ambil ID film dari card
-                    showMovieDetails(movie); // Panggil metode untuk menampilkan detail film berdasarkan Movie
+                    // Panggil metode untuk menampilkan detail film berdasarkan Movie
+                    showMovieDetails(movie);
                 });
 
                 contfilm.getChildren().add(movieCard); // Tambahkan card film ke VBox
@@ -82,19 +79,19 @@ public class HomeController {
         }
     }
 
+    // Menampilkan Film Detail Popup untuk pemesanan
     private void showMovieDetails(Movie movie) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/FilmDetailPopUp.fxml"));
-            AnchorPane movieCard = loader.load();
-            FilmDetailPopupController controller = loader.getController();
+            FXMLLoader filmPopupLoader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/FilmDetailPopUp.fxml"));
+            AnchorPane filmPopup = filmPopupLoader.load();
+            FilmDetailPopupController filmPopupC = filmPopupLoader.getController();
 
             // Menginisialisasi controller dengan Movie object
-            controller.initialize(root, movie);
+            filmPopupC.initialize(root, movie, filmPopupC);
 
             // Buat pop up
-            Stage stage = (Stage) root.getScene().getWindow();
-            root.getChildren().add(movieCard);
-            stage.setTitle("Detail Film");
+            root.getChildren().add(filmPopup);
+            HomeApp.setWindowTitle("Detail Film - " + movie.getJudul());
 
         }catch (IOException e) {
             e.printStackTrace();
@@ -132,15 +129,10 @@ public class HomeController {
         return bcheckout;
     }
 
-    public FlowPane getMovieCard(){
-        return contfilm;
-    }
-
-    public Button getBkeranjang() {
-        return bkeranjang;
-    }
-
     public Label getThrghome(){
         return thrghome;
     }
+
+    // Asumsikan semua id movie pada database berurutan dan mulai dari 1
+    public static Movie movieFromId(int id) { return movies.get(id - 1); }
 }
