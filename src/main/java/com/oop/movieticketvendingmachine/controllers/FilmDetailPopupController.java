@@ -16,7 +16,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.StringConverter;
 
-import java.io.IOException;
 import java.sql.*;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -40,9 +39,6 @@ public class FilmDetailPopupController {
     private ComboBox<Timestamp> waktuTiket;
 
     @FXML
-    private ComboBox<Ticket> tempatDuduk;
-
-    @FXML
     private Label lKursiDipilih;
 
     @FXML
@@ -58,11 +54,11 @@ public class FilmDetailPopupController {
     private AnchorPane root;
 
     // Properti non FXML
+    public static List<Ticket> tickets;
+    private List<Ticket> ticketsWaktu, ticketsPesan;
     private AnchorPane parentOfRoot; // Parent of popup
     private FilmDetailPopupController filmPopupC;
     private Movie currentMovie;
-    public static List<Ticket> tickets;
-    private List<Ticket> ticketsWaktu, ticketsPesan;
 
     @FXML
     public void initialize(AnchorPane parent, Movie movie, FilmDetailPopupController filmPopupCon) {
@@ -70,13 +66,13 @@ public class FilmDetailPopupController {
         currentMovie = movie;
         filmPopupC = filmPopupCon;
         closeBtn.setOnAction(event -> removePopup());
+        HomeApp.setWindowTitle("Detail Film - " + movie.getJudul());
 
         // Setel tampilan berdasarkan film saat ini
         setJudulFilm(currentMovie.getJudul());
         setPosterFilm(currentMovie.getGambar());
         setDeskripsi(currentMovie.getDeskripsi());
 
-        tempatDuduk.setDisable(true);
         lKursiDipilih.setDisable(true);
         btnPesan.setDisable(true);
         thargaTiket.setVisible(false);
@@ -99,42 +95,20 @@ public class FilmDetailPopupController {
         });
         waktuTiket.setOnAction(event -> {
             buttonDenah.setDisable(false);
-            tempatDuduk.setDisable(false);
-            tempatDuduk.setPromptText("Pilih kursi");
-            lKursiDipilih.setDisable(false);
             updateTicketsWaktu();
-            kursiDropDown();
         });
-// ------------------------------ Kemungkinan akan dihapus ------------------------------ //
-        // Mengatur tampilan pilihan Ticket pada dropdown
-        tempatDuduk.setConverter(new StringConverter<Ticket>() {
-            @Override
-            public String toString(Ticket ticket) {
-                return ticket != null ? ticket.getNamaKursi() : "";
-            }
 
-            @Override
-            public Ticket fromString(String string) { return null; }
-        });
-        tempatDuduk.setOnAction(event -> {
-            updateTicketsPesan(tempatDuduk.getValue());
-        });
-//--------------------------------------------------------------------------------------- //
         // Tampilkan popup denah saat buttonDenah ditekan
         buttonDenah.setOnAction(event -> {
-            try {
-                FXMLLoader denahLoader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/DenahPopup.fxml"));
-                AnchorPane denah = denahLoader.load();;
-                DenahPopupController denahC = denahLoader.getController();
+            FXMLLoader denahLoader = Utils.customFXMLLoader("fxml/DenahPopup.fxml");
+            AnchorPane denah = denahLoader.getRoot();;
+            DenahPopupController denahC = denahLoader.getController();
 
-                denahC.initialize(root, filmPopupC);
-                denahC.loadKursi();
-                denahC.updateKursi(ticketsWaktu, ticketsPesan);
+            denahC.initialize(root, filmPopupC);
+            denahC.loadKursi();
+            denahC.updateKursi(ticketsWaktu, ticketsPesan);
 
-                root.getChildren().add(denah);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            root.getChildren().add(denah);
         });
 
         // Memproses pesanan dan kembali ke Home
@@ -143,16 +117,13 @@ public class FilmDetailPopupController {
                 Keranjang.tambahIsiKeranjang(ticket);
             }
 
-            HomeApp.updateTotalHarga();
+            HomeController.updateTotalHarga();
             removePopup();
         });
-
-        root.getChildren().remove(tempatDuduk);
     }
 
     public List<Ticket> getTicketList() {
-        // id_film tidak dicari karena sudah didapat dari Movie currentMovie
-        String query = "SELECT id_tiket, nama_kursi, jadwal_film, status_tiket FROM TIKET WHERE status_tiket = 'tersedia' AND id_film = ?";
+        String query = "SELECT * FROM TIKET WHERE status_tiket = 'tersedia' AND id_film = ?";
         Connection connection = null;
         List<Ticket> daftarTiket = new ArrayList<>();
 
@@ -167,14 +138,14 @@ public class FilmDetailPopupController {
             // Proses hasil query
             while (resultSet.next()) {
                 Ticket ticket = new Ticket(
-                        resultSet.getInt("id_tiket"),
-                        currentMovie.getId(),
-                        resultSet.getTimestamp("jadwal_film"),
-                        resultSet.getString("nama_kursi"),
-                        resultSet.getString("status_tiket")
+                    resultSet.getInt("id_tiket"),
+                    currentMovie.getId(),
+                    resultSet.getTimestamp("jadwal_film"),
+                    resultSet.getString("nama_kursi"),
+                    resultSet.getString("status_tiket")
                 );
 
-                // Jangan masukkan tiket yang ada di keranjang
+                // Jangan tambahkan tiket yang sudah ada di keranjang
                 if (!isiKeranjang.contains(ticket))
                     daftarTiket.add(ticket);
             }
@@ -198,11 +169,8 @@ public class FilmDetailPopupController {
         }
     }
 
-    public void kursiDropDown() {
-        tempatDuduk.getItems().clear();
-        for (Ticket ticket : ticketsWaktu) {
-            tempatDuduk.getItems().add(ticket);
-        }
+    public String getJudulFilm() {
+        return currentMovie.getJudul();
     }
 
     public void setJudulFilm(String judul) {
@@ -225,6 +193,7 @@ public class FilmDetailPopupController {
 
     public void removePopup() {
         parentOfRoot.getChildren().remove(root);
+        HomeApp.setWindowTitle("Cinema Ticket Vending Machine");
     }
 
     // Update tiket berdasarkan waktu dipilih
@@ -250,26 +219,30 @@ public class FilmDetailPopupController {
             }
         }
 
-        // Meng-update tampilan
-        updateTharga();
-        updateLKursiDipilih();
+        // Meng-update tampilan GUI
         if (!ticketsPesan.isEmpty()) {
+            // Urutkan berdasarkan nama kursi
+            ticketsPesan.sort(Comparator.comparing(Ticket::getNamaKursi));
             btnPesan.setDisable(false);
             thargaTiket.setVisible(true);
         } else {
             btnPesan.setDisable(true);
             thargaTiket.setVisible(false);
         }
+        updateTharga();
+        updateLKursiDipilih();
     }
 
     public void updateLKursiDipilih() {
         if (ticketsPesan.isEmpty()) {
+            lKursiDipilih.setDisable(true);
             lKursiDipilih.setText("Tempat duduk belum dipilih");
         } else {
+            lKursiDipilih.setDisable(false);
             lKursiDipilih.setText(ticketsPesan.stream()
-                    .filter(Objects::nonNull) // Hilangkan elemen null
-                    .map(Ticket::getNamaKursi)
-                    .collect(Collectors.joining(", ")));
+                .filter(Objects::nonNull) // Hilangkan elemen null
+                .map(Ticket::getNamaKursi)
+                .collect(Collectors.joining(", ")));
         }
     }
 }

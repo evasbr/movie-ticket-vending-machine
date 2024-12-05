@@ -1,8 +1,15 @@
 package com.oop.movieticketvendingmachine.controllers;
 
+import com.oop.movieticketvendingmachine.models.Keranjang;
+import com.oop.movieticketvendingmachine.models.Ticket;
+import com.oop.movieticketvendingmachine.models.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
+
+import static com.oop.movieticketvendingmachine.controllers.HomeController.movieFromId;
+import static com.oop.movieticketvendingmachine.models.Keranjang.isiKeranjang;
 
 public class KeranjangItemController {
     @FXML
@@ -14,16 +21,25 @@ public class KeranjangItemController {
     @FXML
     private Button delBtn;
 
-    public void setInfo(String val) {
-        info.setText(val);
-    }
+    @FXML
+    private HBox root;
 
-    public Button getDelBtn(){
-        return delBtn;
-    }
+    @FXML
+    public void initialize(KeranjangPopupController kPopupC, Ticket item) {
+        // Setel teks informasi dan harga item
+        info.setText(item.toString());
+        hargaTxt.setText(Utils.IDRFormat(movieFromId(item.getIdFilm()).getHarga()));
 
-    public void setHargaTxt(String val) {
-        hargaTxt.setText(val);
-    }
+        // Mendapatkan tombol hapus dan menambahkan event handler untuk menghapus item
+        delBtn.setOnAction(event -> {
+            Keranjang.hapusIsiKeranjang(item.getIdTiket());
+            kPopupC.getKeranjangItemWrapper().getChildren().remove(root);
+            kPopupC.updateTotalKeranjang();
 
+            if (isiKeranjang.isEmpty()){
+                kPopupC.getKeranjangItemWrapper().
+                        getChildren().add(new Label("Tidak ada isi keranjang"));
+            }
+        });
+    }
 }

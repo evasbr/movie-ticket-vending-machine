@@ -2,13 +2,13 @@ package com.oop.movieticketvendingmachine.controllers;
 
 import com.oop.movieticketvendingmachine.HomeApp;
 import com.oop.movieticketvendingmachine.models.Ticket;
+import com.oop.movieticketvendingmachine.models.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 
-import java.io.IOException;
 import java.util.*;
 
 public class DenahPopupController {
@@ -31,16 +31,16 @@ public class DenahPopupController {
     private HashMap<String, Ticket> kursiTicketsWktHM;
 
     @FXML
-    public void initialize(AnchorPane parent, FilmDetailPopupController filmPopupCon) throws IOException {
+    public void initialize(AnchorPane parent, FilmDetailPopupController filmPopupCon) {
         parentOfRoot = parent;
         filmPopupC = filmPopupCon;
         kursiButtonHM = new HashMap<>();
         kursiTicketsWktHM = new HashMap<>();
         closeBtn.setOnAction(event -> removePopup());
-        HomeApp.setWindowTitle("Denah Film");
+        HomeApp.setWindowTitle("Denah Bioskop");
     }
 
-    public void loadKursi() throws IOException {
+    public void loadKursi() {
         // Hapus kursi dummy dari SceneBuilder
         kursiButtonHM.clear();
 
@@ -50,8 +50,8 @@ public class DenahPopupController {
         for (String row : rows) {
             for (int i = 1; i <= 12; i++) {
                 String namaKursi = row + i;
-                FXMLLoader krsBtnLoader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/KursiButton.fxml"));
-                Button krsBtn = krsBtnLoader.load();
+                FXMLLoader krsBtnLoader = Utils.customFXMLLoader("fxml/KursiButton.fxml");
+                Button krsBtn = krsBtnLoader.getRoot();
                 krsBtn.setText(namaKursi);
 
                 // 1-6 ada di grid kiri, 7-12 ada di grid kanan
@@ -86,7 +86,7 @@ public class DenahPopupController {
     }
 
     // Update kursi berdasarkan aktivitas tiket pada Film Detail Popup
-    public void updateKursi(List<Ticket> ticketsWaktu, List<Ticket> ticketsPesan) throws IOException {
+    public void updateKursi(List<Ticket> ticketsWaktu, List<Ticket> ticketsPesan) {
         for (Ticket tiket : ticketsWaktu) {
             Button btnRef = kursiButtonHM.get(tiket.getNamaKursi());
             kursiTicketsWktHM.put(tiket.getNamaKursi(), tiket);
@@ -104,11 +104,8 @@ public class DenahPopupController {
         }
     }
 
-    public Button getCloseBtn() {
-        return closeBtn;
-    }
-
     public void removePopup() {
         parentOfRoot.getChildren().remove(root);
+        HomeApp.setWindowTitle("Detail Film - " + filmPopupC.getJudulFilm());
     }
 }

@@ -57,7 +57,6 @@
                                  <VBox.margin>
                                     <Insets />
                                  </VBox.margin></ComboBox>
-                                        <ComboBox fx:id="tempatDuduk" prefHeight="70.0" prefWidth="420.0" promptText="Pilih kursi" stylesheets="@../css/comboBox.css" />
                               <Label fx:id="lKursiDipilih" prefHeight="70.0" prefWidth="420.0" styleClass="daf" text="Tempat duduk belum dipilih">
                                  <VBox.margin>
                                     <Insets />
@@ -75,6 +74,9 @@
                                 </VBox>
                         <Button fx:id="btnPesan" mnemonicParsing="false" prefHeight="67.0" prefWidth="319.0" style="-fx-font-weight: bold;" text="Masukkan ke Keranjang" />
                             </children>
+                     <padding>
+                        <Insets top="55.0" />
+                     </padding>
                         </VBox>
                     </children>
                 </HBox>

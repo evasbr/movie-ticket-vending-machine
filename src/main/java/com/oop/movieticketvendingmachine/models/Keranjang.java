@@ -1,6 +1,6 @@
 package com.oop.movieticketvendingmachine.models;
 
-import com.oop.movieticketvendingmachine.HomeApp;
+import com.oop.movieticketvendingmachine.controllers.HomeController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +22,7 @@ public class Keranjang {
                 isiKeranjang.remove(item);
 
                 // Update teks total di halaman home
-                HomeApp.updateTotalHarga();
+                HomeController.updateTotalHarga();
                 break;
             }
         }
@@ -33,7 +33,7 @@ public class Keranjang {
         totalBelanja += movieFromId(tiket.getIdFilm()).getHarga();
 
         // Update teks total di halaman home
-        HomeApp.updateTotalHarga();
+        HomeController.updateTotalHarga();
     }
 
     public static void kosongkan(){

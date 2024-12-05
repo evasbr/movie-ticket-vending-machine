@@ -1,5 +1,6 @@
 package com.oop.movieticketvendingmachine.controllers;
 
+import com.oop.movieticketvendingmachine.HomeApp;
 import com.oop.movieticketvendingmachine.models.Keranjang;
 import com.oop.movieticketvendingmachine.models.Ticket;
 import com.oop.movieticketvendingmachine.models.Utils;
@@ -11,9 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
-import java.io.IOException;
-
-import static com.oop.movieticketvendingmachine.controllers.HomeController.movieFromId;
 import static com.oop.movieticketvendingmachine.models.Keranjang.isiKeranjang;
 
 public class KeranjangPopupController {
@@ -29,53 +27,46 @@ public class KeranjangPopupController {
     @FXML
     private AnchorPane root;
 
+    // Properti non-FXML
+    private AnchorPane parentOfRoot;
+    private KeranjangPopupController kPopupC;
+
     @FXML
-    public void initialize() {
+    public void initialize(AnchorPane parent, KeranjangPopupController kPopupCon)  {
+        parentOfRoot = parent;
+        kPopupC = kPopupCon;
         loadKeranjangItem();
         updateTotalKeranjang();
 
-        closeBtn.setOnAction(event -> root.setVisible(false));
+        closeBtn.setOnAction(event -> removePopup());
     }
 
-    public void loadKeranjangItem(){
+    public void removePopup() {
+        parentOfRoot.getChildren().remove(root);
+        HomeApp.setWindowTitle("Cinema Ticket Vending Machine");
+    }
+
+    public void loadKeranjangItem() {
         if(!isiKeranjang.isEmpty()){
             for (Ticket item : isiKeranjang) {
-                try {
-                    FXMLLoader krjItemLoader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/keranjangItem.fxml"));
-                    HBox krjItem = krjItemLoader.load();  // Memuat item keranjang
+                FXMLLoader krjItemLoader = Utils.customFXMLLoader("fxml/KeranjangItem.fxml");
+                HBox krjItem = krjItemLoader.getRoot();  // Memuat item keranjang
+                KeranjangItemController krjItemC = krjItemLoader.getController();
+                krjItemC.initialize(kPopupC, item);
 
-                    KeranjangItemController krjItemC = krjItemLoader.getController();
-
-                    krjItemC.setInfo(item.toString());
-                    krjItemC.setHargaTxt(Utils.IDRFormat(movieFromId(item.getIdFilm()).getHarga()));;
-
-                    keranjangItemWrapper.getChildren().add(krjItem);  // Menambahkan item ke UI
-
-                    // Mendapatkan tombol hapus dan menambahkan event handler untuk menghapus item
-                    krjItemC.getDelBtn().setOnAction(event -> {
-                        Keranjang.hapusIsiKeranjang(item.getIdTiket());
-                        keranjangItemWrapper.getChildren().remove(krjItem);
-                        updateTotalKeranjang();
-
-                        if (isiKeranjang.isEmpty()){
-                            keranjangItemWrapper.getChildren().add(new Label("Tidak ada isi keranjang"));
-                        }
-                    });
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                keranjangItemWrapper.getChildren().add(krjItem);  // Menambahkan item ke UI
             }
         } else {
             keranjangItemWrapper.getChildren().add(new Label("Tidak ada isi keranjang"));
         }
     }
 
-    public Button getCloseBtn() {
-        return closeBtn;
+    public void updateTotalKeranjang() {
+        HomeApp.setWindowTitle("Keranjang - " + isiKeranjang.size() + " tiket");
+        totalKeranjang.setText(Utils.IDRFormat(Keranjang.getTotalBelanja()));
     }
 
-    public void updateTotalKeranjang() {
-        totalKeranjang.setText(Utils.IDRFormat(Keranjang.getTotalBelanja()));
+    public VBox getKeranjangItemWrapper() {
+        return keranjangItemWrapper;
     }
 }
