@@ -1,19 +1,17 @@
 package com.oop.movieticketvendingmachine.controllers;
 
+import com.oop.movieticketvendingmachine.models.Keranjang;
+import com.oop.movieticketvendingmachine.models.Ticket;
+import com.oop.movieticketvendingmachine.models.Utils;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.HBox;
 
+import static com.oop.movieticketvendingmachine.controllers.HomeController.movieFromId;
+import static com.oop.movieticketvendingmachine.models.Keranjang.isiKeranjang;
+
 public class KeranjangItemController {
-    String id_tiket;
-    String id_pemesanan;
-    String id_kursi;
-
-    @FXML
-    private HBox kItem;
-
     @FXML
     private Label info;
 
@@ -23,31 +21,25 @@ public class KeranjangItemController {
     @FXML
     private Button delBtn;
 
-    public void setData() {
+    @FXML
+    private HBox root;
 
-    }
+    @FXML
+    public void initialize(KeranjangPopupController kPopupC, Ticket item) {
+        // Setel teks informasi dan harga item
+        info.setText(item.toString());
+        hargaTxt.setText(Utils.IDRFormat(movieFromId(item.getIdFilm()).getHarga()));
 
-    public String getInfo() {
-        return info.getText();
-    }
+        // Mendapatkan tombol hapus dan menambahkan event handler untuk menghapus item
+        delBtn.setOnAction(event -> {
+            Keranjang.hapusIsiKeranjang(item.getIdTiket());
+            kPopupC.getKeranjangItemWrapper().getChildren().remove(root);
+            kPopupC.updateTotalKeranjang();
 
-    public void setInfo(String val) {
-        info.setText(val);
-    }
-
-    public String getHargaTxt() {
-        return hargaTxt.getText();
-    }
-
-    public void setHargaTxt(String val) {
-        hargaTxt.setText(val);
-    }
-
-    public void deleteItem(MouseEvent event) {
-        if (kItem.getParent() instanceof javafx.scene.layout.Pane parent) {
-            parent.getChildren().remove(kItem); // Hapus KeranjangItem dari parent
-        }
-
-        // delete tiket di data
+            if (isiKeranjang.isEmpty()){
+                kPopupC.getKeranjangItemWrapper().
+                        getChildren().add(new Label("Tidak ada isi keranjang"));
+            }
+        });
     }
 }

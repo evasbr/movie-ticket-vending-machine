@@ -1,11 +1,17 @@
+@import "colors.css";
+
 .combo-box {
     -fx-background-color: -choiceBox-bg; /* Warna latar belakang */
     -fx-font-color: white; /* Warna teks */
     -fx-font-size: 20px; /* Ukuran font */
     -fx-padding: 10px; /* Padding di dalam ChoiceBox */
     -fx-border-color: #ffffff; /* Warna border */
-    -fx-border-width: 2px; /* Lebar border */
-    -fx-border-radius: 5px; /* Sudut border */
+    -fx-border-width: 1px; /* Lebar border */
+    -fx-border-radius: 8px; /* Sudut border */
+}
+
+.combo-box:hover {
+    -fx-cursor: hand;
 }
 
 .combo-box .list-cell:filled {
@@ -29,12 +35,57 @@
     -fx-background-color: #1E1B4B; /* Warna latar belakang saat hover */
 }
 
-#buttonDenah {
+.combo-box .arrow {
+    -fx-background-color: white;
+}
+
+#lKursiDipilih {
+    -fx-alignment: center_left;
+    -fx-text-alignment: left;
     -fx-background-color: -choiceBox-bg; /* Warna latar belakang */
+    -fx-font-color: white; /* Warna teks */
+    -fx-font-size: 20px; /* Ukuran font */
+    -fx-font-weight: bold;
+    -fx-border-color: #ffffff; /* Warna border */
+    -fx-border-width: 1px; /* Lebar border */
+    -fx-border-radius: 8px; /* Sudut border */
+}
+
+#buttonDenah{
+    -fx-background-color: -purple-500; /* Warna latar belakang */
+    -fx-text-fill: white; /* Warna teks */
+    -fx-font-size: 16px; /* Ukuran font */
+    -fx-padding: 10px; /* Padding di dalam ChoiceBox */
+    -fx-border-color: #ffffff; /* Warna border */
+    -fx-border-width: 1px; /* Lebar border */
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px; /* Sudut border */
+}
+#buttonDenah:hover {
+    -fx-background-color: -purple-500-darker1; /* Warna latar belakang */
+    -fx-cursor: hand;
+}
+#buttonDenah:pressed {
+    -fx-background-color: -purple-500-darker2; /* Warna latar belakang */
+}
+
+#btnPesan {
+    -fx-background-color: white; /* Warna latar belakang */
+    -fx-text-fill: -purple-700; /* Warna teks */
+    -fx-font-size: 14px; /* Ukuran font */
+    -fx-padding: 10px; /* Padding di dalam ChoiceBox */
+    -fx-border-color: #ffffff; /* Warna border */
+    -fx-border-width: 2px; /* Lebar border */
+    -fx-border-radius: 5px; /* Sudut border */
+}
+
+#btnPesan:hover {
+    -fx-background-color: rgba(79,70,229, 0.2); /* Warna latar belakang */
     -fx-text-fill: white; /* Warna teks */
     -fx-font-size: 14px; /* Ukuran font */
     -fx-padding: 10px; /* Padding di dalam ChoiceBox */
     -fx-border-color: #ffffff; /* Warna border */
     -fx-border-width: 2px; /* Lebar border */
     -fx-border-radius: 5px; /* Sudut border */
+    -fx-cursor: hand;
 }

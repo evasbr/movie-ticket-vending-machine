@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="kItem" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="98.0" prefWidth="486.0" spacing="32.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.KeranjangItemController">
+<HBox fx:id="root" alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="98.0" prefWidth="486.0" spacing="32.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.KeranjangItemController">
    <children>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="97.0" prefWidth="370.0" spacing="10.0" styleClass="info">
          <children>
@@ -28,7 +28,7 @@
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </padding>
       </VBox>
-      <Button fx:id="delBtn" mnemonicParsing="false" onMouseReleased="#deleteItem" prefHeight="60.0" prefWidth="60.0">
+      <Button fx:id="delBtn" mnemonicParsing="false" prefHeight="60.0" prefWidth="60.0">
          <styleClass>
             <String fx:value="closeBtn" />
             <String fx:value="red" />

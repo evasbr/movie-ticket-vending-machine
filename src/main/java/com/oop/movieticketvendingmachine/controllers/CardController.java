@@ -12,12 +12,12 @@ public class CardController {
     @FXML
     private Label filmTitle;
 
-    public void setImage(String url){
+    public void setImage(String url) {
         Image image = new Image(url);
         filmPoster.setImage(image);
     }
 
-    public void setTitle(String title){
+    public void setTitle(String title) {
         filmTitle.setText(title);
     }
 }

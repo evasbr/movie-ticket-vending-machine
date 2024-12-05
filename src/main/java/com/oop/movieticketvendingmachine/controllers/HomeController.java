@@ -1,82 +1,109 @@
 package com.oop.movieticketvendingmachine.controllers;
 
 import com.oop.movieticketvendingmachine.database.databaseConfig;
+import com.oop.movieticketvendingmachine.models.Keranjang;
 import com.oop.movieticketvendingmachine.models.Movie;
+import com.oop.movieticketvendingmachine.models.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.oop.movieticketvendingmachine.models.Keranjang.isiKeranjang;
+
+
 public class HomeController {
+    public static List<Movie> movies = new ArrayList<>();
     @FXML
     private FlowPane contfilm;
+
+    @FXML
+    private Button bkeranjang;
 
     @FXML
     private Button bcheckout;
 
     @FXML
+    private Label thrghome;
+
+    @FXML
     private AnchorPane root;
 
+    // Properti non-FXML
+    static Label thrg;
+
+    @FXML
+    public void initialize() {
+        thrg = thrghome;
+        loadMovieCards();
+        HomeController.updateTotalHarga();
+        System.out.println("movie size = " + movies.size());
+
+        // Memuat popup halaman keranjang
+        bkeranjang.setOnAction(event -> {
+            FXMLLoader loader = Utils.customFXMLLoader("fxml/KeranjangPopup.fxml");
+            AnchorPane keranjangPopup = loader.getRoot();
+            KeranjangPopupController keranjangPopupC = loader.getController();
+            keranjangPopupC.initialize(root, keranjangPopupC);
+
+            root.getChildren().add(keranjangPopup);
+        });
+
+        // Membuat popup halaman bayar
+        bcheckout.setOnAction(event -> {
+            if (isiKeranjang.isEmpty()) return;
+
+            FXMLLoader bayarLoader = Utils.customFXMLLoader("fxml/qr-view.fxml");
+            AnchorPane hlmByr = bayarLoader.getRoot();
+            QrController byrC = bayarLoader.getController();
+            byrC.initialize(root);
+
+            root.getChildren().add(hlmByr);
+        });
+    }
+
+    // Menampilkan daftar movie pada halaman home
     public void loadMovieCards() {
-        List<Movie> movies = getMoviesList(); // Ambil daftar film dari database
-        contfilm.setHgap(20);
-        contfilm.setVgap(20);
+        movies = getMoviesList(); // Ambil daftar film dari database
         for (Movie movie : movies) {
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/FilmCard.fxml"));
-                Pane movieCard = loader.load();
+            FXMLLoader loader = Utils.customFXMLLoader("fxml/FilmCard.fxml");
+            Pane movieCard = loader.getRoot();
 
-                CardController controller = loader.getController();
+            CardController controller = loader.getController();
 
-                controller.setImage(movie.getGambar()); // Set judul film
-                controller.setTitle(movie.getJudul());
+            controller.setImage(movie.getGambar()); // Set gambar dan judul film
+            controller.setTitle(movie.getJudul());
 
-                movieCard.setUserData(movie.getId()); // Asumsi movie.getId() mengembalikan ID film
+            // Membuat event handler untuk card
+            movieCard.setOnMouseClicked(event -> {
+                // Panggil metode untuk menampilkan detail film berdasarkan Movie
+                showMovieDetails(movie);
+            });
 
-                // Membuat event handler untuk card
-                movieCard.setOnMouseClicked(event -> {
-                    Integer movieId = (Integer) movieCard.getUserData(); // Ambil ID film dari card
-                    showMovieDetails(movieId, movie.getJudul(), movie.getGambar(), movie.getDeskripsi()); // Panggil metode untuk menampilkan detail film berdasarkan ID
-                });
-                contfilm.getChildren().add(movieCard);
-
-//                contfilm.getChildren().add(movieCard); // Tambahkan card film ke VBox
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            contfilm.getChildren().add(movieCard); // Tambahkan card film ke VBox
         }
     }
 
-    private void showMovieDetails(Integer movieId, String judul, String url, String deskripsi) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/oop/movieticketvendingmachine/fxml/FilmDetailPopUp.fxml"));
-            AnchorPane movieCard = loader.load();
-            FilmDetailPopupController controller = loader.getController();
-            // Menginisialisasi controller dengan movieId
-            controller.initialize(movieId);
-            controller.setJudulFilm(judul);
-            controller.setPosterFilm(url);
-            controller.setDeskripsi(deskripsi);
+    // Menampilkan Film Detail Popup untuk pemesanan
+    private void showMovieDetails(Movie movie) {
+        FXMLLoader filmPopupLoader = Utils.customFXMLLoader("fxml/FilmDetailPopUp.fxml");
+        AnchorPane filmPopup = filmPopupLoader.getRoot();
+        FilmDetailPopupController filmPopupC = filmPopupLoader.getController();
 
-            // Buat pop up
-            Stage stage = (Stage) root.getScene().getWindow();
-            root.getChildren().add(movieCard);
-            stage.setTitle("Detail Film");
+        // Menginisialisasi controller dengan Movie object
+        filmPopupC.initialize(root, movie, filmPopupC);
 
-        }catch (IOException e) {
-            e.printStackTrace();
-        }
+        // Buat pop up
+        root.getChildren().add(filmPopup);
     }
 
     public List<Movie> getMoviesList() {
@@ -106,11 +133,10 @@ public class HomeController {
         return movies;
     }
 
-    public Button getBcheckout() {
-        return bcheckout;
+    public static void updateTotalHarga() {
+        thrg.setText(Utils.IDRFormat(Keranjang.getTotalBelanja()));
     }
 
-    public FlowPane getMovieCard(){
-        return contfilm;
-    }
+    // Asumsikan semua id movie pada database berurutan dan mulai dari 1
+    public static Movie movieFromId(int id) { return movies.get(id - 1); }
 }

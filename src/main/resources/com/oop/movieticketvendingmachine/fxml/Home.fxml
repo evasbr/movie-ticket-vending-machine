@@ -10,13 +10,13 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="root" prefHeight="833.0" prefWidth="1282.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.HomeController">
+<AnchorPane fx:id="root" prefHeight="833.0" prefWidth="1280.0" stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.HomeController">
     <children>
-        <VBox prefHeight="833.0" prefWidth="1282.0">
+        <VBox prefHeight="833.0" prefWidth="1280.0">
             <children>
-                <ScrollPane fx:id="awal" hbarPolicy="NEVER" prefHeight="733.0" prefWidth="1282.0">
+                <ScrollPane fx:id="awal" focusTraversable="false" hbarPolicy="NEVER" prefHeight="733.0" prefWidth="539.0">
                     <content>
-                        <AnchorPane fx:id="content" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1700.0" prefWidth="1280.0">
+                        <AnchorPane fx:id="content" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1700.0" prefWidth="1280.0">
                             <children>
                                 <Label fx:id="titletext" layoutY="32.0" prefHeight="17.0" prefWidth="1238.0" styleClass="titletext" text="Cinema Ticket Vending Machine" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="32.0" />
                                 <Label fx:id="subtitletext" layoutY="99.0" prefHeight="17.0" prefWidth="1280.0" styleClass="subtitletext" text="Pilih tiket bioskop yang ingin dipesan kemudian lakukan checkout" />
@@ -37,76 +37,14 @@
                                 <Label fx:id="tnotiffilm" layoutY="372.0" prefHeight="17.0" prefWidth="1280.0" text="Film Tayang" />
 
 
-                                <FlowPane fx:id="contfilm" layoutX="40.0" layoutY="413.0" prefHeight="1300.0" prefWidth="1200.0" styleClass="contfilm">
-                                    <children>
-<!--                                        <Pane layoutX="10.0" layoutY="12.0" prefHeight="600.0" prefWidth="380.0">-->
-<!--                                            <children>-->
-<!--                                                <ImageView fitHeight="520.0" fitWidth="360.0" layoutX="10.0" layoutY="16.0" pickOnBounds="true">-->
-<!--                                                    <image>-->
-<!--                                                        <Image url="@../Images/wickedcover.png" />-->
-<!--                                                    </image>-->
-<!--                                                </ImageView>-->
-<!--                                                <Label layoutY="551.0" prefHeight="17.0" prefWidth="380.0" text="Wicked" />-->
-<!--                                            </children></Pane>-->
-<!--                                        <Pane layoutX="410.0" layoutY="12.0" prefHeight="600.0" prefWidth="380.0">-->
-<!--                                            <children>-->
-<!--                                                <ImageView fitHeight="520.0" fitWidth="360.0" layoutX="10.0" layoutY="16.0" pickOnBounds="true">-->
-<!--                                                    <image>-->
-<!--                                                        <Image url="@../Images/covervenom.jpg" />-->
-<!--                                                    </image>-->
-<!--                                                </ImageView>-->
-<!--                                                <Label layoutY="551.0" prefHeight="17.0" prefWidth="380.0" text="Venom 3" />-->
-<!--                                            </children>-->
-<!--                                        </Pane>-->
-<!--                                        <Pane layoutX="810.0" layoutY="12.0" prefHeight="600.0" prefWidth="380.0">-->
-<!--                                            <children>-->
-<!--                                                <ImageView fitHeight="520.0" fitWidth="360.0" layoutX="10.0" layoutY="16.0" pickOnBounds="true">-->
-<!--                                                    <image>-->
-<!--                                                        <Image url="@../Images/covertransformer.jpg" />-->
-<!--                                                    </image>-->
-<!--                                                </ImageView>-->
-<!--                                                <Label layoutY="551.0" prefHeight="17.0" prefWidth="380.0" text="Transformer One" />-->
-<!--                                            </children>-->
-<!--                                        </Pane>-->
-<!--                                        <Pane layoutX="10.0" layoutY="631.0" prefHeight="600.0" prefWidth="380.0">-->
-<!--                                            <children>-->
-<!--                                                <ImageView fitHeight="520.0" fitWidth="360.0" layoutX="10.0" layoutY="16.0" pickOnBounds="true">-->
-<!--                                                    <image>-->
-<!--                                                        <Image url="@../Images/coverflow.jpg" />-->
-<!--                                                    </image>-->
-<!--                                                </ImageView>-->
-<!--                                                <Label layoutY="551.0" prefHeight="17.0" prefWidth="380.0" text="Flow" />-->
-<!--                                            </children>-->
-<!--                                        </Pane>-->
-<!--                                        <Pane layoutX="410.0" layoutY="631.0" prefHeight="600.0" prefWidth="380.0">-->
-<!--                                            <children>-->
-<!--                                                <ImageView fitHeight="520.0" fitWidth="360.0" layoutX="10.0" layoutY="16.0" pickOnBounds="true">-->
-<!--                                                    <image>-->
-<!--                                                        <Image url="@../Images/Red%20One.jpeg" />-->
-<!--                                                    </image>-->
-<!--                                                </ImageView>-->
-<!--                                                <Label layoutY="551.0" prefHeight="17.0" prefWidth="380.0" text="Red One" />-->
-<!--                                            </children>-->
-<!--                                        </Pane>-->
-<!--                                        <Pane layoutX="810.0" layoutY="631.0" prefHeight="600.0" prefWidth="380.0">-->
-<!--                                            <children>-->
-<!--                                                <ImageView fitHeight="520.0" fitWidth="360.0" layoutX="10.0" layoutY="16.0" pickOnBounds="true">-->
-<!--                                                    <image>-->
-<!--                                                        <Image url="@../Images/coverbila.jpg" />-->
-<!--                                                    </image>-->
-<!--                                                </ImageView>-->
-<!--                                                <Label layoutY="551.0" prefHeight="17.0" prefWidth="380.0" text="Bila Esok Ibu Tiada" />-->
-<!--                                            </children>-->
-<!--                                        </Pane>-->
-                                    </children>
-                                </FlowPane>
+                                <FlowPane fx:id="contfilm" hgap="20.0" layoutX="40.0" layoutY="413.0" prefHeight="1300.0" prefWidth="1200.0" styleClass="contfilm" vgap="20.0" />
                             </children>
                         </AnchorPane>
                     </content>
                 </ScrollPane>
                 <Pane fx:id="navbar" prefHeight="120.0" prefWidth="1282.0">
                     <children>
-                        <Button fx:id="bkeranjang" layoutX="69.0" layoutY="23.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="160.0" stylesheets="@../css/style.css" text="Keranjang">
+                        <Button fx:id="bkeranjang" layoutX="69.0" layoutY="16.0" mnemonicParsing="false" prefHeight="71.0" prefWidth="160.0" stylesheets="@../css/style.css" text="Keranjang">
                             <graphic>
                                 <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
@@ -115,8 +53,9 @@
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button fx:id="bcheckout" layoutX="912.0" layoutY="20.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="320.0" stylesheets="@../css/style.css" text="Checkout" />
-                        <Label fx:id="thrg" layoutX="242.0" layoutY="47.0" text="Total" />
+                        <Button fx:id="bcheckout" layoutX="912.0" layoutY="20.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="320.0" styleClass="button-custom" stylesheets="@../css/style.css" text="Checkout" />
+                        <Label fx:id="ttotalhome" layoutX="241.0" layoutY="27.0" text="Total :" />
+                  <Label fx:id="thrghome" layoutX="241.0" layoutY="50.0" text="Rp 50000,00" />
                     </children>
                 </Pane>
             </children>
