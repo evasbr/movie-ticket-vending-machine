@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="833.0" prefWidth="1280.0" styleClass="background" stylesheets="@../css/popups.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.SucceedController">
+<AnchorPane fx:id="root" prefHeight="833.0" prefWidth="1280.0" styleClass="background" stylesheets="@../css/popups.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.oop.movieticketvendingmachine.controllers.SucceedController">
    <children>
       <AnchorPane layoutX="170.0" layoutY="65.0" prefHeight="704.0" prefWidth="940.0" styleClass="popupWrapper">
          <stylesheets>

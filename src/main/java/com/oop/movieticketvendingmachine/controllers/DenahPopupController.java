@@ -1,19 +1,14 @@
 package com.oop.movieticketvendingmachine.controllers;
 
-import com.oop.movieticketvendingmachine.DenahApp;
-import com.oop.movieticketvendingmachine.database.databaseConfig;
-import com.oop.movieticketvendingmachine.models.Kursi;
+import com.oop.movieticketvendingmachine.HomeApp;
 import com.oop.movieticketvendingmachine.models.Ticket;
+import com.oop.movieticketvendingmachine.models.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Button;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.stage.Stage;
 
-import java.io.IOException;
-import java.sql.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class DenahPopupController {
@@ -27,112 +22,90 @@ public class DenahPopupController {
     private Button closeBtn;
 
     @FXML
-    public void initialize() {
-//         Tutup P O P U P
-        closeBtn.setOnAction(event ->
-            closeBtn.getParent().setVisible(false)
-        );
+    private AnchorPane root;
 
-//        // Tutup J E N D E L A
-//        closeBtn.setOnAction(event -> {
-//            // Mendapatkan stage dari tombol yang diklik
-//            Stage stage = (Stage) closeBtn.getScene().getWindow();
-//            stage.close(); // Menutup stage
-//        });
+    // Properti non FXML
+    private AnchorPane parentOfRoot; // Parent of popup
+    private FilmDetailPopupController filmPopupC;
+    private HashMap<String, Button> kursiButtonHM;
+    private HashMap<String, Ticket> kursiTicketsWktHM;
 
-        closeBtn.getParent().setVisible(false);
+    @FXML
+    public void initialize(AnchorPane parent, FilmDetailPopupController filmPopupCon) {
+        parentOfRoot = parent;
+        filmPopupC = filmPopupCon;
+        kursiButtonHM = new HashMap<>();
+        kursiTicketsWktHM = new HashMap<>();
+        closeBtn.setOnAction(event -> removePopup());
+        HomeApp.setWindowTitle("Denah Bioskop");
     }
 
-    // Ingat, parameter keduanya STRING
-    public void loadKursi(int id_film, String dateStr) throws IOException {
-        HashMap<String, Button> nama_ButtonList = getNama_ButtonList();
+    public void loadKursi() {
+        // Hapus kursi dummy dari SceneBuilder
+        kursiButtonHM.clear();
 
-        // Format string ke LocalDateTime
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime localDateTime = LocalDateTime.parse(dateStr, formatter);
+        // Bioskop terdapat 4 baris A B C D dengan masing-masing 12 kolom bangku
+        final String[] rows = {"A", "B", "C", "D"};
 
-        String query = "SELECT * FROM TIKET WHERE id_film = ? AND jadwal_film = ?";
-        Connection connection = null;
-
-        try {
-            connection = databaseConfig.connectDB();
-            PreparedStatement preparedStatement = connection.prepareStatement(query);
-
-            // Konversi LocalDateTime ke Timestamp
-            Timestamp jadwal_film = Timestamp.valueOf(localDateTime);
-
-            // Set parameter untuk query
-            preparedStatement.setInt(1, id_film);
-            preparedStatement.setTimestamp(2, jadwal_film);
-
-            // Eksekusi query
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            // Proses hasil query
-            while (resultSet.next()) {
-                String namaKursi = resultSet.getString("nama_kursi");
-                Button btnRef = nama_ButtonList.get(namaKursi);
-                switch (resultSet.getString("status_tiket")) {
-                    case "tersedia":
-                        btnRef.getStyleClass().remove("kursiBtnUnavail");
-                        btnRef.getStyleClass().add("kursiBtnAvail");
-                        break;
-                }
-            }
-
-            // Menutup ResultSet dan PreparedStatement
-            resultSet.close();
-            preparedStatement.close();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public HashMap<String, Button> getNama_ButtonList() throws IOException {
-        final String[] labels = {"A", "B", "C", "D"};
-        HashMap<String, Button> nama_ButtonList = new HashMap<>();
-
-        for (int i = 0; i < labels.length; i++) {
-            for (int j = 1; j <= 12; j++) {
-                String namaKursi = labels[i] + Integer.toString(j);
-                FXMLLoader krsBtnLoader = new FXMLLoader(DenahApp.class.getResource("fxml/KursiButton.fxml"));
-                Button krsBtn = krsBtnLoader.load();
+        for (String row : rows) {
+            for (int i = 1; i <= 12; i++) {
+                String namaKursi = row + i;
+                FXMLLoader krsBtnLoader = Utils.customFXMLLoader("fxml/KursiButton.fxml");
+                Button krsBtn = krsBtnLoader.getRoot();
                 krsBtn.setText(namaKursi);
 
-                if (j <= 6) {
+                // 1-6 ada di grid kiri, 7-12 ada di grid kanan
+                if (i <= 6) {
                     leftGrid.getChildren().add(krsBtn);
                 } else {
                     rightGrid.getChildren().add(krsBtn);
                 }
 
                 krsBtn.setOnAction(event -> {
+                    // Kursi nonaktif tidak dapat diapa-apakan
                     if (krsBtn.getStyleClass().contains("kursiBtnUnavail"))
                         return;
 
+                    // Ubah ke seleksi jika kursi tersedia
                     if (krsBtn.getStyleClass().remove("kursiBtnAvail")) {
                         krsBtn.getStyleClass().add("kursiBtnSelect");
-                    } else {
+                    }
+                    // Ubah ke tersedia jika kursi sudah diseleksi
+                    else {
                         krsBtn.getStyleClass().remove("kursiBtnSelect");
                         krsBtn.getStyleClass().add("kursiBtnAvail");
                     }
+
+                    // Update kursi dipilih pada Film Detail Popup
+                    filmPopupC.updateTicketsPesan(kursiTicketsWktHM.get(namaKursi));
                 });
 
-                nama_ButtonList.put(namaKursi, krsBtn);
+                kursiButtonHM.put(namaKursi, krsBtn);
             }
         }
-
-        return nama_ButtonList;
     }
 
-    public FlowPane getLeftGrid() {
-        return leftGrid;
+    // Update kursi berdasarkan aktivitas tiket pada Film Detail Popup
+    public void updateKursi(List<Ticket> ticketsWaktu, List<Ticket> ticketsPesan) {
+        for (Ticket tiket : ticketsWaktu) {
+            Button btnRef = kursiButtonHM.get(tiket.getNamaKursi());
+            kursiTicketsWktHM.put(tiket.getNamaKursi(), tiket);
+
+            // Jika kursi sudah dipesan
+            if (ticketsPesan.contains(tiket)) {
+                btnRef.getStyleClass().remove("kursiBtnUnavail");
+                btnRef.getStyleClass().add("kursiBtnSelect");
+            }
+            // Jika kursi belum dipesan
+            else if (tiket.getStatus_tiket().equals("tersedia")) {
+                btnRef.getStyleClass().remove("kursiBtnUnavail");
+                btnRef.getStyleClass().add("kursiBtnAvail");
+            }
+        }
     }
 
-    public FlowPane getRightGrid() {
-        return rightGrid;
-    }
-
-    public Button getCloseBtn() {
-        return closeBtn;
+    public void removePopup() {
+        parentOfRoot.getChildren().remove(root);
+        HomeApp.setWindowTitle("Detail Film - " + filmPopupC.getJudulFilm());
     }
 }
